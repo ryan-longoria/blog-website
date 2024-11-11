@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rise and Fall of Dennard Scaling - Ryan's Blog</title>
+    <title>Theoretical Computer Architectures: Von Neumann vs Harvard - Ryan's Blog</title>
     
     <!-- SEO Meta Description -->
-    <meta name="description" content="Explore Dennard Scaling, its impact on processor performance, and the reasons behind its eventual decline in the evolution of CPU and GPU technologies.">
+    <meta name="description" content="Explore the differences between Von Neumann and Harvard architectures, two foundational theoretical computer designs that shape modern computing.">
     
     <!-- Open Graph Meta Tags for Social Sharing -->
-    <meta property="og:title" content="The Rise and Fall of Dennard Scaling">
-    <meta property="og:description" content="Explore Dennard Scaling, its impact on processor performance, and the reasons behind its eventual decline in the evolution of CPU and GPU technologies.">
-    <meta property="og:url" content="https://ryanlongoria.com/posts/the-rise-and-fall-of-dennard-scaling.html">
+    <meta property="og:title" content="Theoretical Computer Architectures: Von Neumann vs Harvard">
+    <meta property="og:description" content="Explore the differences between Von Neumann and Harvard architectures, two foundational theoretical computer designs that shape modern computing.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/von-neumann-vs-harvard.html">
     <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/von-neumann-harvard.jpg">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The Rise and Fall of Dennard Scaling">
-    <meta name="twitter:description" content="Explore Dennard Scaling, its impact on processor performance, and the reasons behind its eventual decline in the evolution of CPU and GPU technologies.">
+    <meta name="twitter:title" content="Theoretical Computer Architectures: Von Neumann vs Harvard">
+    <meta name="twitter:description" content="Explore the differences between Von Neumann and Harvard architectures, two foundational theoretical computer designs that shape modern computing.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/von-neumann-harvard.jpg">
     
     <!-- Structured Data with Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "The Rise and Fall of Dennard Scaling",
-      "description": "Explore Dennard Scaling, its impact on processor performance, and the reasons behind its eventual decline in the evolution of CPU and GPU technologies.",
+      "headline": "Theoretical Computer Architectures: Von Neumann vs Harvard",
+      "description": "Explore the differences between Von Neumann and Harvard architectures, two foundational theoretical computer designs that shape modern computing.",
       "author": {
         "@type": "Person",
         "name": "Ryan Longoria"
@@ -39,7 +41,8 @@
         }
       },
       "datePublished": "2022-05-02",
-      "url": "https://ryanlongoria.com/posts/the-rise-and-fall-of-dennard-scaling.html",
+      "url": "https://ryanlongoria.com/posts/von-neumann-vs-harvard.html",
+      "image": "https://ryanlongoria.com/images/von-neumann-harvard.jpg"
     }
     </script>
     
@@ -90,30 +93,36 @@
     <!-- Main Content -->
     <main class="main-container">
         <article class="post-content">
-            <h1>The Rise and Fall of Dennard Scaling</h1>
+            <h1>Theoretical Computer Architectures: Von Neumann vs Harvard</h1>
             <p><em>Published on 2022-05-02</em></p>
 
             <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
 
-            <p>Dennard Scaling was created by Robert H. Dennard and it stated that “as transistors get smaller, their power density stays constant so that the power use stays in proportion with area: both voltage and current scale (downward) with length.”</p>
+            <p>The two theoretical computer architectures that I will touch on are the Von Neumann Architecture and the Harvard Architecture. Although very similar, they have their differences and are important when discussing how to design a computer.</p>
 
-            <h2>Implications of Dennard Scaling</h2>
-            <p>This would mean that for each new generation of processors:</p>
+            <h2>Von Neumann Architecture</h2>
+            <p>This architecture has a design that is close to how modern computers are made. It consists of:</p>
             <ul>
-                <li>We could double the transistor count</li>
-                <li>We could double the frequency without extracting power usage</li>
-                <li>We could more than double the performance for each new generation of processors</li>
+                <li>CPU with control and arithmetic units</li>
+                <li>Memory for data and instructions</li>
+                <li>Input device</li>
+                <li>Output device</li>
+            </ul>
+            <img src="../images/von-neumann-diagram.jpg" alt="Von Neumann Architecture Diagram" class="post-image">
+
+            <h2>Harvard Architecture</h2>
+            <p>The Harvard Architecture is almost exactly the same way Von Neumann’s Architecture is made, but it has a separate storage for data and instructions. Instead of placing them together in one memory location, there are two allocated storage locations for each respectively.</p>
+            <img src="../images/harvard-diagram.jpg" alt="Harvard Architecture Diagram" class="post-image">
+
+            <h2>Other Theoretical Architectures</h2>
+            <p>There are other theoretical computer architectures such as:</p>
+            <ul>
+                <li><strong>Turing Machine:</strong> Holds a mathematical model of modern computers.</li>
+                <li><strong>Dataflow Architecture:</strong> Explains how functional units are triggered by the arrival of data instead of a designated time given by clock signals.</li>
             </ul>
 
-            <h2>The Decline of Dennard Scaling</h2>
-            <p>Around 2004, Dennard Scaling took a turn backward and ultimately was a failure. Single-core CPU performance stopped growing with the performance of multi-cores taking the front seat. Frequency growth also stopped growing.</p>
-            <p>At the time, Dennard Scaling seemed appropriate, but with the growth of technology in this day and age, it didn’t go forward.</p>
-
-            <h2>The Rise of GPUs</h2>
-            <p>The failure of Dennard Scaling also sent Graphics Processing Units (GPU) to become huge. A GPU is similar to a CPU, but it is used for graphics applications and applications with heavy SIMD operations. GPUs have high parallelism, but poor data locality while CPU has the opposite making them better for general purpose applications.</p>
-
             <h2>Conclusion</h2>
-            <p>Understanding the rise and fall of Dennard Scaling is essential for appreciating the current landscape of processor technologies. As we move forward, the focus has shifted from merely increasing transistor counts and clock speeds to optimizing parallel processing capabilities, as seen with the proliferation of multi-core CPUs and powerful GPUs. This shift underscores the importance of adapting to technological limitations and leveraging alternative architectures to continue advancing computational performance.</p>
+            <p>Understanding the Von Neumann and Harvard architectures provides insight into the foundations of modern computing. While both architectures share similarities, their differences are crucial in shaping how computers handle data and instructions. Explore these architectures further to appreciate the evolution of computational design.</p>
         </article>
     </main>
 
@@ -130,13 +139,8 @@
     </footer>
 
     <!-- JavaScript Files -->
-    <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
-    <!-- Custom Scripts -->
     <script src="../js/scripts.js"></script>
-
-    <!-- Prism.js for Syntax Highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
 </body>
