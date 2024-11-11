@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Arithmetic - Ryan's Blog</title>
+
+    <!-- SEO Meta Description -->
+    <meta name="description"
+        content="A brief overview of computer arithmetic, including binary representation, two's complement encoding, floating-point encoding, and logic gates.">
+
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Computer Arithmetic">
+    <meta property="og:description"
+        content="An introduction to computer arithmetic covering binary numbers, two's complement, floating-point encoding, and logic gates.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/computer-arithmetic.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/computer_arithmetic.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Computer Arithmetic">
+    <meta name="twitter:description"
+        content="A brief overview of computer arithmetic, including binary numbers and logic gates.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/computer_arithmetic.jpg">
+
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "Article",
+"headline": "Computer Arithmetic",
+"description": "A brief overview of computer arithmetic, including binary representation, two's complement encoding, floating-point encoding, and logic gates.",
+"author": {
+"@type": "Person",
+"name": "Ryan Longoria"
+},
+"publisher": {
+"@type": "Organization",
+"name": "Ryan Longoria's Blog",
+"logo": {
+"@type": "ImageObject",
+"url": "https://ryanlongoria.com/images/gengar_logo.png"
+}
+},
+"datePublished": "2022-05-02",
+"url": "https://ryanlongoria.com/posts/computer-arithmetic.html",
+"image": "https://ryanlongoria.com/images/computer_arithmetic.jpg"
+}
+</script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <article class="post-content">
+            <h1>Computer Arithmetic</h1>
+            <p><em>Published on 2022-05-02</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
+
+            <p>Computer Arithmetic is a broad branch in the fields of Computer Science and Computer Engineering. In this
+                overview, we'll cover essential topics such as binary representation of integers, two's complement
+                encoding, floating-point encoding, and logic gates. While there's much more to computer arithmetic, this
+                post aims to provide a brief introduction to these key concepts.</p>
+
+            <h2>Binary Representation of Numbers</h2>
+
+            <figure>
+                <img src="../images/binary_chart.jpg" alt="Binary Representation of Numbers">
+                <figcaption>Figure: Binary representation of integers 0–15</figcaption>
+            </figure>
+
+            <p>The chart above shows the binary representation of integers from 0 to 15. While hexadecimal values are
+                also important, they won't be covered in this post.</p>
+
+            <p>To understand the math behind converting between decimal and binary, I recommend these two YouTube videos
+                by The Organic Chemistry Tutor:</p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=rsxT4FfRBaM" target="_blank"
+                        rel="noopener noreferrer">Binary to Decimal</a></li>
+                <li><a href="https://www.youtube.com/watch?v=Hyr1x81dpjE" target="_blank"
+                        rel="noopener noreferrer">Decimal to Binary</a></li>
+            </ul>
+
+            <h2>Two’s Complement Encoding</h2>
+            <p>While positive integers are represented straightforwardly in binary, negative integers use two's
+                complement encoding. This method simplifies arithmetic operations, especially addition involving
+                negative numbers. Without two's complement, handling negative numbers would require more complex
+                subtraction operations.</p>
+
+            <p>The basic formula for two's complement encoding is:</p>
+            <pre><code>2<sup>N</sup> - x</code></pre>
+            <p>Where:</p>
+            <ul>
+                <li><code>x</code> is the absolute value of the negative number</li>
+                <li><code>N</code> is the number of bits</li>
+            </ul>
+
+            <p>Let's take the number <code>-1</code> as an example, using 5 bits:</p>
+            <pre><code>2<sup>5</sup> - 1 = 32 - 1 = 31</code></pre>
+            <p>Now, convert 31 to binary in 5 bits:</p>
+            <pre><code>11111</code></pre>
+            <p>You can apply this method to any negative number with any number of bits using the formula above!</p>
+
+            <h2>Floating-Point Encoding</h2>
+            <p>Floating-point encoding can seem intimidating, especially when working with scientific notation.
+                Floating-point numbers are typically represented in a 32-bit format divided into three sections:</p>
+            <ul>
+                <li><strong>Sign (1 bit):</strong> Indicates if the number is positive (0) or negative (1).</li>
+                <li><strong>Exponent (8 bits):</strong> Encodes the exponent part.</li>
+                <li><strong>Fraction (23 bits):</strong> Encodes the mantissa or fractional part.</li>
+            </ul>
+
+            <h3>Example 1:</h3>
+            <p>Convert the binary scientific notation <code>1.11111 x 2<sup>111</sup></code> to floating-point encoding.
+            </p>
+
+            <p><strong>Sign Bit:</strong> Since the number is positive, the sign bit is <code>0</code>.</p>
+
+            <p><strong>Exponent:</strong></p>
+            <ul>
+                <li>The exponent in binary is <code>111</code>, which is <code>7</code> in decimal.</li>
+                <li>Add the bias (127) to the exponent: <code>7 + 127 = 134</code>.</li>
+                <li>Convert 134 to binary: <code>10000110</code>.</li>
+            </ul>
+
+            <p><strong>Fraction:</strong></p>
+            <ul>
+                <li>Take the fractional part after the binary point: <code>11111</code>.</li>
+                <li>Pad it to 23 bits: <code>11111000000000000000000</code>.</li>
+            </ul>
+
+            <p><strong>Final Floating-Point Encoding:</strong></p>
+            <pre><code>Sign:       0
+Exponent: 10000110
+Fraction: 11111000000000000000000</code></pre>
+
+            <figure>
+                <img src="../images/floating_point_example1.jpg" alt="Floating-Point Encoding Example 1">
+                <figcaption>Figure: Floating-point encoding of 1.11111 x 2<sup>111</sup></figcaption>
+            </figure>
+
+            <h3>Example 2:</h3>
+            <p>Convert the binary scientific notation <code>-1.010101 x 2<sup>-0110001</sup></code> to floating-point
+                encoding.</p>
+
+            <p><strong>Sign Bit:</strong> Since the number is negative, the sign bit is <code>1</code>.</p>
+
+            <p><strong>Exponent:</strong></p>
+            <ul>
+                <li>The exponent in binary is <code>0110001</code>, which is <code>49</code> in decimal.</li>
+                <li>Subtract the exponent from the bias: <code>127 - 49 = 78</code>.</li>
+                <li>Convert 78 to binary: <code>01001110</code>.</li>
+            </ul>
+
+            <p><strong>Fraction:</strong></p>
+            <ul>
+                <li>Take the fractional part: <code>010101</code>.</li>
+                <li>Pad it to 23 bits: <code>01010100000000000000000</code>.</li>
+            </ul>
+
+            <p><strong>Final Floating-Point Encoding:</strong></p>
+            <pre><code>Sign:       1
+Exponent: 01001110
+Fraction: 01010100000000000000000</code></pre>
+
+            <figure>
+                <img src="../images/floating_point_example2.jpg" alt="Floating-Point Encoding Example 2">
+                <figcaption>Figure: Floating-point encoding of -1.010101 x 2<sup>-0110001</sup></figcaption>
+            </figure>
+
+            <h2>Logic Gates</h2>
+            <p>Logic gates are fundamental building blocks of digital circuits. They are used in transistors, which in
+                turn build processors for CPUs. Logic gates are also essential for constructing functional units.</p>
+
+            <p>The four main types of logic gates are:</p>
+
+            <h3>AND Gate</h3>
+            <figure>
+                <img src="../images/and_gate.jpg" alt="AND Gate">
+                <figcaption>Figure: AND Gate Symbol and Truth Table</figcaption>
+            </figure>
+            <p>The AND gate outputs <code>1</code> only if both inputs are <code>1</code>.</p>
+
+            <h3>OR Gate</h3>
+            <figure>
+                <img src="../images/or_gate.jpg" alt="OR Gate">
+                <figcaption>Figure: OR Gate Symbol and Truth Table</figcaption>
+            </figure>
+            <p>The OR gate outputs <code>1</code> if at least one input is <code>1</code>.</p>
+
+            <h3>Exclusive OR (XOR) Gate</h3>
+            <figure>
+                <img src="../images/xor_gate.jpg" alt="XOR Gate">
+                <figcaption>Figure: XOR Gate Symbol and Truth Table</figcaption>
+            </figure>
+            <p>The XOR gate outputs <code>1</code> if the inputs are different.</p>
+
+            <h3>NOT Gate</h3>
+            <figure>
+                <img src="../images/not_gate.jpg" alt="NOT Gate">
+                <figcaption>Figure: NOT Gate Symbol and Truth Table</figcaption>
+            </figure>
+            <p>The NOT gate inverts the input signal.</p>
+
+            <h2>Conclusion</h2>
+            <p>This brief overview covered some fundamental concepts in computer arithmetic, including binary
+                representation, two's complement encoding, floating-point encoding, and logic gates. Understanding these
+                basics is essential for deeper exploration into computer architecture and digital systems.</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="../js/scripts.js"></script>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
+</body>
+
+</html>
