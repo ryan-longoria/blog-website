@@ -56,18 +56,42 @@
 
     <!-- Main Content -->
     <main class="main-container">
-        <!-- Posts Section -->
         <section class="posts">
             <h1>Incident Response</h1>
-            <article class="post" data-category="incident-response">
+            <div class="filter-controls">
+                <!-- Search -->
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search posts...">
+                </div>
+
+                <!-- Time Filters -->
+                <div class="time-filters">
+                    <button class="time-filter-btn" data-timeframe="all">All Time</button>
+                    <button class="time-filter-btn" data-timeframe="7">Last 7 Days</button>
+                    <button class="time-filter-btn" data-timeframe="30">Last 30 Days</button>
+                    <button class="time-filter-btn" data-timeframe="365">Last Year</button>
+                </div>
+
+                <!-- Sorting -->
+                <div class="sort-container">
+                    <label for="sort-select">Sort by:</label>
+                    <select id="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+            </div>
+            <article class="post" data-category="incident-response" data-date="2022-01-25">
                 <h3><a href="../posts/analyzing-log-files-juicy-details.html">Analyzing Log Files — Juicy Details</a>
                 </h3>
+                <p class="post-date">Published on January 25, 2022</p>
                 <p>A write-up for GEEZET1's TryHackMe "Juicy Details" room, focusing on log file analysis to identify
                     cyber threats.</p>
                 <a href="../posts/analyzing-log-files-juicy-details.html" class="read-more">Read More</a>
             </article>
-            <article class="post" data-category="incident-response">
+            <article class="post" data-category="incident-response" data-date="2022-01-19">
                 <h3><a href="../posts/apache-log4shell-analysis.html">Apache Log4Shell Analysis</a></h3>
+                <p class="post-date">Published on January 19, 2022</p>
                 <p>An analysis of the Apache Log4j vulnerability CVE-2021-44228, exploring exploitation techniques,
                     mitigation strategies, and a walkthrough of TryHackMe's 'Solar' room.</p>
                 <a href="../posts/apache-log4shell-analysis.html" class="read-more">Read More</a>
