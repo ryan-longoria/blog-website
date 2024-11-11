@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What are BIOS and UEFI? - Ryan's Blog</title>
+    
+    <!-- SEO Meta Description -->
+    <meta name="description" content="Understand the difference between BIOS and UEFI, their roles in computer systems, and how to secure them with features like Secure Boot and Full-Disk Encryption.">
+
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="What are BIOS and UEFI?">
+    <meta property="og:description" content="Understand the difference between BIOS and UEFI, their roles in computer systems, and how to secure them with features like Secure Boot and Full-Disk Encryption.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/what-are-bios-and-uefi.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/what-are-bios-and-uefi.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What are BIOS and UEFI?">
+    <meta name="twitter:description" content="Understand the difference between BIOS and UEFI, their roles in computer systems, and how to secure them with features like Secure Boot and Full-Disk Encryption.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/what-are-bios-and-uefi.jpg">
+
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What are BIOS and UEFI?",
+      "description": "Understand the difference between BIOS and UEFI, their roles in computer systems, and how to secure them with features like Secure Boot and Full-Disk Encryption.",
+      "author": {
+        "@type": "Person",
+        "name": "Ryan Longoria"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ryan Longoria's Blog",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ryanlongoria.com/images/gengar_logo.png"
+        }
+      },
+      "datePublished": "2022-08-15",
+      "url": "https://ryanlongoria.com/posts/what-are-bios-and-uefi.html",
+      "image": "https://ryanlongoria.com/images/what-are-bios-and-uefi.jpg"
+    }
+    </script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <article class="post-content">
+            <h1>What are BIOS and UEFI?</h1>
+            <p><em>Published on August 15, 2022</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
+
+            <p>The Basic Input Output System (BIOS) firmware is a set of instructions that tell a computer how to accept input and send output to external sources. It is usually a chip located on the motherboard.</p>
+
+            <h2>BIOS in Action</h2>
+            <p>Say we have a laptop computer that comes with an external mouse. The BIOS communicates and exchanges data with this mouse.</p>
+            <p>Another example is during the Power-On Self-Test (POST). If the graphics card fails, BIOS may alert you with beep codes or error screens, such as Dell devices emitting 6 beeps for a failed graphics card.</p>
+
+            <h2>UEFI: The Modern Alternative</h2>
+            <p>The Unified Extensible Firmware Interface (UEFI) is a modern replacement for BIOS. It offers faster boot times, supports larger drives, and includes advanced security features like Secure Boot.</p>
+
+            <h2>BIOS Hardening Techniques</h2>
+            <h3>1. Flashing</h3>
+            <p>Updating BIOS (flashing) can include critical security patches but comes with risks like bricking the computer if an error occurs during the update.</p>
+
+            <h3>2. Setting a BIOS Password</h3>
+            <p>BIOS allows setting admin passwords to restrict unauthorized access. However, resetting it is often as simple as resetting a jumper or cable.</p>
+
+            <h3>3. Enabling Secure Boot</h3>
+            <p>Available only in UEFI, Secure Boot prevents malware from running during boot time. Most systems have it enabled by default.</p>
+
+            <h3>4. Full-Disk Encryption (FDE)</h3>
+            <p>FDE locks down a computer's data with a password, preventing unauthorized access even if the attacker has physical control. However, losing the FDE password makes data recovery impossible.</p>
+
+            <h2>Conclusion</h2>
+            <p>Understanding BIOS and UEFI, along with implementing hardening techniques like Secure Boot and FDE, is essential for securing your computer and its data. Keep these concepts in mind as you manage your system's firmware!</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+</body>
+</html>
