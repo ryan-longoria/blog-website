@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyzing Log Files — Juicy Details - Ryan's Blog</title>
-    
+
     <!-- SEO Meta Description -->
-    <meta name="description" content="A write-up for GEEZET1's TryHackMe 'Juicy Details' room, focusing on analyzing log files to identify cyber threats and vulnerabilities.">
-    
+    <meta name="description"
+        content="A write-up for GEEZET1's TryHackMe 'Juicy Details' room, focusing on analyzing log files to identify cyber threats and vulnerabilities.">
+
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="Analyzing Log Files — Juicy Details">
-    <meta property="og:description" content="Learn how to analyze log files to uncover cyber threats in this TryHackMe 'Juicy Details' room write-up.">
+    <meta property="og:description"
+        content="Learn how to analyze log files to uncover cyber threats in this TryHackMe 'Juicy Details' room write-up.">
     <meta property="og:url" content="https://ryanlongoria.com/posts/analyzing-log-files-juicy-details.html">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://ryanlongoria.com/images/juicy_details_banner.jpg">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Analyzing Log Files — Juicy Details">
-    <meta name="twitter:description" content="A step-by-step guide to analyzing log files in the 'Juicy Details' room on TryHackMe.">
+    <meta name="twitter:description"
+        content="A step-by-step guide to analyzing log files in the 'Juicy Details' room on TryHackMe.">
     <meta name="twitter:image" content="https://ryanlongoria.com/images/juicy_details_banner.jpg">
-    
+
     <!-- Structured Data with Schema.org -->
     <script type="application/ld+json">
     {
@@ -45,17 +49,18 @@
         "image": "https://ryanlongoria.com/images/juicy_details.jpg"
     }
     </script>
-    
+
     <!-- CSS Link -->
     <link rel="stylesheet" href="../css/styles.css">
-    
+
     <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <!-- Particles.js Container -->
     <div id="particles-js"></div>
-    
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -89,165 +94,216 @@
             </nav>
         </div>
     </header>
-    
+
     <!-- Main Content -->
     <main class="main-container">
         <article class="post-content">
             <h1>Analyzing Log Files — Juicy Details</h1>
             <p><em>Published on 2022-01-22</em></p>
-    
+
             <p><strong>Category:</strong> <a href="../categories/incident-response.html">Incident Response</a></p>
-    
-            <p>This is a write-up for <a href="https://tryhackme.com/r/p/GEEZET1" target="_blank" rel="noopener noreferrer">GEEZET1's</a> TryHackMe <a href="https://tryhackme.com/r/room/juicydetails" target="_blank" rel="noopener noreferrer">Juicy Details</a> room. The main purpose of this room is to get familiar with analyzing log files, which is crucial when identifying cyber threats and vulnerabilities.</p>
-    
-            <p>We are given a scenario where we are a SOC Analyst for one of the biggest juice shops in the world, and an attacker has infiltrated our network. We are provided with three log files and must identify the techniques used to breach our environment.</p>
-    
+
+            <p>This is a write-up for <a href="https://tryhackme.com/r/p/GEEZET1" target="_blank"
+                    rel="noopener noreferrer">GEEZET1's</a> TryHackMe <a
+                    href="https://tryhackme.com/r/room/juicydetails" target="_blank" rel="noopener noreferrer">Juicy
+                    Details</a> room. The main purpose of this room is to get familiar with analyzing log files, which
+                is crucial when identifying cyber threats and vulnerabilities.</p>
+
+            <p>We are given a scenario where we are a SOC Analyst for one of the biggest juice shops in the world, and
+                an attacker has infiltrated our network. We are provided with three log files and must identify the
+                techniques used to breach our environment.</p>
+
             <figure>
                 <img src="../images/juicy_details_banner.jpg" alt="Juicy Details Banner">
             </figure>
-    
+
             <h2>Reconnaissance</h2>
             <p>The three log files are briefly shown below:</p>
-    
+
             <figure>
                 <img src="../images/access_log_snippet.jpg" alt="Access Log">
                 <figcaption>Figure: access.log</figcaption>
             </figure>
-    
+            <br>
             <figure>
                 <img src="../images/auth_log_snippet.jpg" alt="Auth Log">
                 <figcaption>Figure: auth.log</figcaption>
             </figure>
-    
+            <br>
             <figure>
                 <img src="../images/vsftpd_log_snippet.jpg" alt="vsftpd Log">
                 <figcaption>Figure: vsftpd.log</figcaption>
             </figure>
-    
-            <p>After a brief glance at each log, it looks like <code>access.log</code> is a good starting point to find the information we need to determine the techniques used to penetrate our environment. Access logs are typically found on web servers and show all requests for files someone has requested from a website. <code>auth.log</code> holds information about authentication attempts, such as someone trying to log into an account using a password. <code>vsftpd.log</code> is an FTP server log for Unix systems (indicating we’re analyzing logs from a Unix system), containing events that occur on FTP.</p>
-    
-            <p>Now, we can start scanning the <code>access.log</code> file for events that may indicate techniques used by the attacker.</p>
-    
+            <br>
+            <p>After a brief glance at each log, it looks like <code>access.log</code> is a good starting point to find
+                the information we need to determine the techniques used to penetrate our environment. Access logs are
+                typically found on web servers and show all requests for files someone has requested from a website.
+                <code>auth.log</code> holds information about authentication attempts, such as someone trying to log
+                into an account using a password. <code>vsftpd.log</code> is an FTP server log for Unix systems
+                (indicating we’re analyzing logs from a Unix system), containing events that occur on FTP.</p>
+
+            <p>Now, we can start scanning the <code>access.log</code> file for events that may indicate techniques used
+                by the attacker.</p>
+
             <figure>
                 <img src="../images/nmap_scan_log.jpg" alt="Nmap Scan in Logs">
             </figure>
-    
-            <p>From the beginning of the log file, as shown above, we can already tell that Nmap is being used. Nmap is a popular network scanner that can identify devices connected to a network. It can also provide deeper information on the services running on a network and more. It appears they have used it to scan our network, so we can include it as a tool used against us.</p>
-    
+            <br>
+            <p>From the beginning of the log file, as shown above, we can already tell that Nmap is being used. Nmap is
+                a popular network scanner that can identify devices connected to a network. It can also provide deeper
+                information on the services running on a network and more. It appears they have used it to scan our
+                network, so we can include it as a tool used against us.</p>
+
             <figure>
                 <img src="../images/hydra_attempts_log.jpg" alt="Hydra Attempts in Logs">
             </figure>
-    
-            <p>After some scrolling and scanning for services, I found Hydra entries. Hydra is a tool used to brute-force usernames and passwords for different services. From the logs, there are a lot of occurrences of Hydra, indicating they were likely brute-forcing us.</p>
-    
+            <br>
+            <p>After some scrolling and scanning for services, I found Hydra entries. Hydra is a tool used to
+                brute-force usernames and passwords for different services. From the logs, there are a lot of
+                occurrences of Hydra, indicating they were likely brute-forcing us.</p>
+
             <figure>
                 <img src="../images/sqlmap_usage_log.jpg" alt="SQLMap Usage in Logs">
             </figure>
-    
-            <p>Continuing through the logs, I found entries related to sqlmap. SQL itself is a programming language used to create and manage databases. Sqlmap is a tool created to exploit SQL injection vulnerabilities. Since we are analyzing a server, it's common to have some sort of database located here.</p>
-    
+            <br>
+            <p>Continuing through the logs, I found entries related to sqlmap. SQL itself is a programming language used
+                to create and manage databases. Sqlmap is a tool created to exploit SQL injection vulnerabilities. Since
+                we are analyzing a server, it's common to have some sort of database located here.</p>
+
             <figure>
                 <img src="../images/curl_and_feroxbuster_log.jpg" alt="Curl and Feroxbuster in Logs">
             </figure>
-    
-            <p>In the log screenshot above, we identify two more techniques. The first one is <code>curl</code>, which is used to transfer data to and from a server. Since we are on a server, it's very likely they used it to transfer some data. The second technique is Feroxbuster, which is used to perform forced browsing on a web application.</p>
-    
-            <p>We are now at the end of the log file and have discovered all of the techniques that have been used. We need to figure out which endpoint was vulnerable to a brute-force attack. We have already noted that Hydra was our brute-forcing tool, especially after scrolling through all those log events.</p>
-    
+            <br>
+            <p>In the log screenshot above, we identify two more techniques. The first one is <code>curl</code>, which
+                is used to transfer data to and from a server. Since we are on a server, it's very likely they used it
+                to transfer some data. The second technique is Feroxbuster, which is used to perform forced browsing on
+                a web application.</p>
+
+            <p>We are now at the end of the log file and have discovered all of the techniques that have been used. We
+                need to figure out which endpoint was vulnerable to a brute-force attack. We have already noted that
+                Hydra was our brute-forcing tool, especially after scrolling through all those log events.</p>
+
             <figure>
                 <img src="../images/hydra_bruteforce_endpoint.jpg" alt="Hydra Brute-force Endpoint">
             </figure>
-    
-            <p>As you can see above, Hydra was targeting <code>/rest/user/login</code>. We know that we have been exploited, and this was the only target that was brute-forced, so we can conclude that this was the vulnerable endpoint.</p>
-    
-            <p>Next, we need to identify which endpoint was vulnerable to SQL injection. We know that sqlmap was the tool used for SQL injection, so let's look at it again.</p>
-    
+            <br>
+            <p>As you can see above, Hydra was targeting <code>/rest/user/login</code>. We know that we have been
+                exploited, and this was the only target that was brute-forced, so we can conclude that this was the
+                vulnerable endpoint.</p>
+
+            <p>Next, we need to identify which endpoint was vulnerable to SQL injection. We know that sqlmap was the
+                tool used for SQL injection, so let's look at it again.</p>
+
             <figure>
                 <img src="../images/sqlmap_target_endpoint.jpg" alt="SQLMap Target Endpoint">
             </figure>
-    
-            <p>From the logs, <code>/rest/products/search</code> was the only intended target for sqlmap, so we can say that it is vulnerable to SQL injection. The parameter used for the SQL injection is indicated by the <code>q</code> parameter in the query string.</p>
-    
-            <p>Now, we want to find the endpoint that the attacker exploited to retrieve files. The only tool used that can directly retrieve files is Feroxbuster.</p>
-    
+            <br>
+            <p>From the logs, <code>/rest/products/search</code> was the only intended target for sqlmap, so we can say
+                that it is vulnerable to SQL injection. The parameter used for the SQL injection is indicated by the
+                <code>q</code> parameter in the query string.</p>
+
+            <p>Now, we want to find the endpoint that the attacker exploited to retrieve files. The only tool used that
+                can directly retrieve files is Feroxbuster.</p>
+
             <figure>
                 <img src="../images/feroxbuster_discovery.jpg" alt="Feroxbuster Discovery">
             </figure>
-    
-            <p>Feroxbuster targeted several directories, but under <code>/ftp</code>, it seems two <code>.bak</code> files were located.</p>
-    
+            <br>
+            <p>Feroxbuster targeted several directories, but under <code>/ftp</code>, it seems two <code>.bak</code>
+                files were located.</p>
+
             <h2>Stolen Data</h2>
-            <p>After conducting reconnaissance on the log files, we now want to find what data was stolen. We need to look out for the attacker’s movement on the website, response codes, and abnormal query strings.</p>
-    
+            <p>After conducting reconnaissance on the log files, we now want to find what data was stolen. We need to
+                look out for the attacker’s movement on the website, response codes, and abnormal query strings.</p>
+
             <figure>
                 <img src="../images/product_reviews_log.jpg" alt="Product Reviews in Logs">
             </figure>
-    
-            <p>We aim to find where a hacker could scrape user email addresses from our website. By scanning the logs, we find that product reviews are a common place where users would comment, as shown above.</p>
-    
+            <br>
+            <p>We aim to find where a hacker could scrape user email addresses from our website. By scanning the logs,
+                we find that product reviews are a common place where users would comment, as shown above.</p>
+
             <p>We know that a brute-force attack was launched against us, but was it successful?</p>
-    
+
             <figure>
                 <img src="../images/successful_bruteforce_log.jpg" alt="Successful Brute-force Entry">
             </figure>
-    
-            <p>From the above log entries, there are many 400, 500, and 501 status codes, which are error messages indicating unsuccessful attempts. However, there is one 200 status code hiding in there, which means the attack was successful at that point. The time and date for the successful attack are <strong>11/Apr/2021:09:16:31 +0000</strong> (In TryHackMe, you may have to enter 32 seconds).</p>
-    
-            <p>Since we know that we were hit by a SQL injection attack, we need to determine what information may have been stolen through it.</p>
-    
+            <br>
+            <p>From the above log entries, there are many 400, 500, and 501 status codes, which are error messages
+                indicating unsuccessful attempts. However, there is one 200 status code hiding in there, which means the
+                attack was successful at that point. The time and date for the successful attack are
+                <strong>11/Apr/2021:09:16:31 +0000</strong> (In TryHackMe, you may have to enter 32 seconds).</p>
+
+            <p>Since we know that we were hit by a SQL injection attack, we need to determine what information may have
+                been stolen through it.</p>
+
             <figure>
                 <img src="../images/sqlmap_dump_log.jpg" alt="SQLMap Data Dump">
             </figure>
-    
-            <p>At the very end of the SQL injection attack by sqlmap, we can see a section containing "email" and "password". This was also accessed using <code>curl</code> immediately afterward.</p>
-    
-            <p>Previously, we found out that two <code>.bak</code> files (<code>coupons_2013.md.bak</code> and <code>www-data.bak</code>) were attempted to be downloaded using Feroxbuster. We also know that the FTP service was used to gain access to those files because they were in the <code>/ftp</code> directory. If you need a refresher, refer to the screenshot below.</p>
-    
+            <br>
+            <p>At the very end of the SQL injection attack by sqlmap, we can see a section containing "email" and
+                "password". This was also accessed using <code>curl</code> immediately afterward.</p>
+
+            <p>Previously, we found out that two <code>.bak</code> files (<code>coupons_2013.md.bak</code> and
+                <code>www-data.bak</code>) were attempted to be downloaded using Feroxbuster. We also know that the FTP
+                service was used to gain access to those files because they were in the <code>/ftp</code> directory. If
+                you need a refresher, refer to the screenshot below.</p>
+
             <figure>
                 <img src="../images/ftp_access_log.jpg" alt="FTP Access Log">
             </figure>
-    
-            <p>We have all of this information, but now we want to know what account or username was used to access these files. Since FTP was the service used, let's check out our <code>vsftpd.log</code> file to look for login attempts.</p>
-    
+            <br>
+            <p>We have all of this information, but now we want to know what account or username was used to access
+                these files. Since FTP was the service used, let's check out our <code>vsftpd.log</code> file to look
+                for login attempts.</p>
+
             <figure>
                 <img src="../images/vsftpd_log_access.jpg" alt="vsftpd Log Access">
             </figure>
-    
-            <p>In the <code>vsftpd.log</code> file, it appears that an anonymous user accessed those two <code>.bak</code> files.</p>
-    
-            <p>For our final step in analyzing these log files to complete the room, we have to figure out what service and username were used to gain shell access to the server.</p>
-    
+            <br>
+            <p>In the <code>vsftpd.log</code> file, it appears that an anonymous user accessed those two
+                <code>.bak</code> files.</p>
+
+            <p>For our final step in analyzing these log files to complete the room, we have to figure out what service
+                and username were used to gain shell access to the server.</p>
+
             <figure>
                 <img src="../images/ssh_access_log.jpg" alt="SSH Access Log">
             </figure>
-    
-            <p>In the above screenshot, you can see that the SSH service (used for shell access) was accessed, and a password was accepted for a user named <code>www-data</code>.</p>
-    
+            <br>
+            <p>In the above screenshot, you can see that the SSH service (used for shell access) was accessed, and a
+                password was accepted for a user named <code>www-data</code>.</p>
+
             <h2>Conclusion</h2>
-            <p>This marks the end of the lab. Analyzing log files is a critical skill in cybersecurity, allowing us to uncover and understand malicious activities within a network. I want to thank <a href="https://tryhackme.com/r/p/GEEZET1" target="_blank" rel="noopener noreferrer">GEEZET1</a> for creating an excellent log analysis room!</p>
+            <p>This marks the end of the lab. Analyzing log files is a critical skill in cybersecurity, allowing us to
+                uncover and understand malicious activities within a network. I want to thank <a
+                    href="https://tryhackme.com/r/p/GEEZET1" target="_blank" rel="noopener noreferrer">GEEZET1</a> for
+                creating an excellent log analysis room!</p>
         </article>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="gengar-shadow"></div>
             <div class="social">
                 <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
-                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
                 <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
         </div>
     </footer>
-    
+
     <!-- JavaScript Files -->
     <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    
+
     <!-- Custom Scripts -->
     <script src="../js/scripts.js"></script>
-    
+
     <!-- Prism.js for Syntax Highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
 </body>
+
 </html>
