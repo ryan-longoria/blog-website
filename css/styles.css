@@ -766,6 +766,29 @@ body.dark-mode .contact-form button:hover {
     font-size: 16px;
 }
 
+#search-results {
+    margin-top: 20px;
+}
+
+.search-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.search-result-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.search-result-item h3 {
+    margin: 0;
+}
+
+.search-result-item p {
+    margin: 5px 0;
+}
+
 .filter-controls {
     display: flex;
     flex-wrap: wrap;
@@ -773,6 +796,45 @@ body.dark-mode .contact-form button:hover {
     margin-bottom: 20px;
 }
 
-.filter-controls > div {
+.filter-controls>div {
     flex: 1 1 200px;
 }
+
+/* Suggestions Container */
+.suggestions {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    max-width: 500px;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+  }
+  
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .suggestion-item:hover,
+  .suggestion-item.selected {
+    background-color: #f0f0f0;
+  }
+  
+  .suggestion-item a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .suggestion-item a strong {
+    font-weight: bold;
+  }
+  
+  .suggestion-item a small {
+    color: #666;
+  }

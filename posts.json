@@ -1,0 +1,94 @@
+[
+    {
+      "title": "Changing Password Policies on Windows Server",
+      "url": "posts/changing-password-policies.html",
+      "excerpt": "Enhance your network's security by implementing strong password policies on Windows Server. Learn how to configure these settings effectively.",
+      "category": "misc",
+      "date": "2022-01-11"
+    },
+    {
+      "title": "Understanding Computer Architecture Components: ISA, Microarchitecture, and System Architecture",
+      "url": "posts/understanding-computer-architecture.html",
+      "excerpt": "Explore the three fundamental components of computer architecture—Instruction Set Architecture, Microarchitecture, and System Architecture—and understand how they interrelate to enable efficient computing.",
+      "category": "misc",
+      "date": "2022-05-02"
+    },
+    {
+      "title": "Understanding Moore's Law and Its Impact on Computer Architecture",
+      "url": "posts/understanding-moores-law.html",
+      "excerpt": "Explore how Moore's Law has driven the evolution of computer architecture, leading to more functional units, cores, larger caches, and complex management units.",
+      "category": "misc",
+      "date": "2022-05-02"
+    },
+    {
+      "title": "The Rise and Fall of Dennard Scaling",
+      "url": "posts/the-rise-and-fall-of-dennard-scaling.html",
+      "excerpt": "Explore how Dennard Scaling influenced processor performance, its eventual decline, and the rise of GPUs in modern computing architecture.",
+      "category": "misc",
+      "date": "2022-05-02"
+    },
+    {
+      "title": "Theoretical Computer Architectures: Von Neumann vs Harvard",
+      "url": "posts/von-neumann-vs-harvard.html",
+      "excerpt": "Discover the key differences between Von Neumann and Harvard architectures and how they influenced modern computing systems.",
+      "category": "misc",
+      "date": "2022-05-02"
+    },
+    {
+      "title": "What is Pipelining?",
+      "url": "posts/what-is-pipelining.html",
+      "excerpt": "Discover how pipelining enables faster instruction execution in processors, along with solutions to hazards like structural, data, and control conflicts.",
+      "category": "misc",
+      "date": "2022-05-03"
+    },
+    {
+      "title": "What are BIOS and UEFI?",
+      "url": "posts/what-are-bios-and-uefi.html",
+      "excerpt": "Learn the differences between BIOS and UEFI, their role in system boot processes, and techniques like Secure Boot and Full-Disk Encryption for better security.",
+      "category": "misc",
+      "date": "2022-08-15"
+    },
+    {
+      "title": "Cryptography and the CIA Triad",
+      "url": "posts/cryptography-and-cia-triad.html",
+      "excerpt": "Explore how cryptography enforces Confidentiality, Integrity, and Availability (CIA) while ensuring secure authentication and nonrepudiation.",
+      "category": "misc",
+      "date": "2023-10-20"
+    },
+    {
+      "title": "What is Instruction Set Architecture (ISA)?",
+      "url": "posts/what-is-instruction-set-architecture.html",
+      "excerpt": "Discover the fundamentals of ISA, its syntax, addressing modes, and its role as a critical bridge between hardware and software.",
+      "category": "misc",
+      "date": "2022-05-02"
+    },
+    {
+      "title": "Computer Arithmetic",
+      "url": "posts/computer-arithmetic.html",
+      "excerpt": "A brief overview of computer arithmetic, covering binary numbers, two's complement, floating-point encoding, and logic gates.",
+      "category": "misc",
+      "date": "2022-05-03"
+    },
+    {
+      "title": "What is Cache?",
+      "url": "posts/what-is-cache.html",
+      "excerpt": "An overview of cache memory, its role in improving system performance, cache levels, and key policies.",
+      "category": "misc",
+      "date": "2022-05-03"
+    },
+    {
+      "title": "Analyzing Log Files — Juicy Details",
+      "url": "posts/analyzing-log-files-juicy-details.html",
+      "excerpt": "A write-up for GEEZET1's TryHackMe \"Juicy Details\" room, focusing on log file analysis to identify cyber threats.",
+      "category": "incident-response",
+      "date": "2022-01-25"
+    },
+    {
+      "title": "Apache Log4Shell Analysis",
+      "url": "posts/apache-log4shell-analysis.html",
+      "excerpt": "An analysis of the Apache Log4j vulnerability CVE-2021-44228, exploring exploitation techniques, mitigation strategies, and a walkthrough of TryHackMe's 'Solar' room.",
+      "category": "incident-response",
+      "date": "2022-01-19"
+    }
+  ]
+  
