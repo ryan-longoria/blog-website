@@ -282,13 +282,13 @@ nav ul li a:hover {
 .post-content h2 {
     margin-top: 20px;
     margin-bottom: 10px;
-    color: var(--gengar-purple);
+    color: var(--gengar-dark);
 }
 
 .post-content h3 {
     margin-top: 15px;
     margin-bottom: 10px;
-    color: var(--gengar-purple);
+    color: var(--gengar-dark);
 }
 
 .post-content p {
