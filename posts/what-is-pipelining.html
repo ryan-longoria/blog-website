@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Pipelining? - Ryan's Blog</title>
+    
+    <!-- SEO Meta Description -->
+    <meta name="description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="What is Pipelining?">
+    <meta property="og:description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/what-is-pipelining.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/what-is-pipelining.jpg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What is Pipelining?">
+    <meta name="twitter:description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/what-is-pipelining.jpg">
+
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What is Pipelining?",
+      "description": "Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.",
+      "author": {
+        "@type": "Person",
+        "name": "Ryan Longoria"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ryan Longoria's Blog",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ryanlongoria.com/images/gengar_logo.png"
+        }
+      },
+      "datePublished": "2022-05-03",
+      "url": "https://ryanlongoria.com/posts/what-is-pipelining.html",
+      "image": "https://ryanlongoria.com/images/what-is-pipelining.jpg"
+    }
+    </script>
+
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <article class="post-content">
+            <h1>What is Pipelining?</h1>
+            <p><em>Published on 2022-05-03</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
+
+            <p>Computer instructions will overlap in a processor and the way these processes work gets done through pipelining. You can think of assembly lines in the same way and how their processes overlap to get things done faster.</p>
+
+            <h2>Benefits of Pipelining</h2>
+            <p>Imagine a computer trying to run Google Chrome and Microsoft Word. Without pipelining, Google Chrome needs to run completely before Microsoft Word can even think about opening up. With pipelining, what you probably experience in your computer, if you open both at the same time, they will open at the same time and fairly quickly too.</p>
+
+            <h2>Types of Hazards</h2>
+            <p>Instruction pipelining can bring some hazards in many situations. This is the cost of trying to be as efficient as possible. Luckily, there are solutions to many of these problems and this is what I’ll be touching upon in this blog!</p>
+
+            <h3>1. Structural Hazards</h3>
+            <p>When instructions overlap, it is important for them to not consume the same hardware resource if there isn’t enough hardware for them. This is defined as a structural hazard.</p>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Separate hardware resources (e.g., data memory vs instruction memory).</li>
+                <li>Access resources in sequence during the same cycle.</li>
+                <li>Duplicate resources for frequently used hardware.</li>
+            </ul>
+
+            <h3>2. Data Hazards</h3>
+            <p>If an instruction depends on the result of the previous instruction, that would be a hazard since instructions would overlap.</p>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Stall the pipeline to wait for older instructions to complete.</li>
+                <li>Implement bypassing/forwarding to pass data between pipeline stages without stalling.</li>
+            </ul>
+
+            <h3>3. Control Hazards</h3>
+            <p>These hazards occur when branch instructions or exceptions interrupt the normal pipeline flow.</p>
+            <p><strong>Solutions:</strong></p>
+            <ul>
+                <li>Add branch prediction mechanisms to guess the outcome of branch instructions.</li>
+                <li>Flush the pipeline for exceptions or incorrect predictions.</li>
+                <li>Delay instruction slots strategically to resolve branch hazards.</li>
+            </ul>
+
+            <h2>Conclusion</h2>
+            <p>Pipelining is a powerful tool in modern computing, enabling faster execution of tasks by overlapping processes. Although it introduces hazards like structural, data, and control issues, various solutions mitigate these risks to ensure efficiency and reliability. Understanding pipelining is key to optimizing processor performance and addressing its challenges effectively.</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
+</body>
+</html>
