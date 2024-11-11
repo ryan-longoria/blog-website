@@ -55,6 +55,13 @@
 
     <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" href="../my-favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../my-favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../my-favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../my-favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../my-favicon/site.webmanifest" />
 </head>
 
 <body>
@@ -140,7 +147,8 @@
                 typically found on web servers and show all requests for files someone has requested from a website.
                 <code>auth.log</code> holds information about authentication attempts, such as someone trying to log
                 into an account using a password. <code>vsftpd.log</code> is an FTP server log for Unix systems
-                (indicating we’re analyzing logs from a Unix system), containing events that occur on FTP.</p>
+                (indicating we’re analyzing logs from a Unix system), containing events that occur on FTP.
+            </p>
 
             <p>Now, we can start scanning the <code>access.log</code> file for events that may indicate techniques used
                 by the attacker.</p>
@@ -200,7 +208,8 @@
             <br>
             <p>From the logs, <code>/rest/products/search</code> was the only intended target for sqlmap, so we can say
                 that it is vulnerable to SQL injection. The parameter used for the SQL injection is indicated by the
-                <code>q</code> parameter in the query string.</p>
+                <code>q</code> parameter in the query string.
+            </p>
 
             <p>Now, we want to find the endpoint that the attacker exploited to retrieve files. The only tool used that
                 can directly retrieve files is Feroxbuster.</p>
@@ -232,7 +241,8 @@
             <p>From the above log entries, there are many 400, 500, and 501 status codes, which are error messages
                 indicating unsuccessful attempts. However, there is one 200 status code hiding in there, which means the
                 attack was successful at that point. The time and date for the successful attack are
-                <strong>11/Apr/2021:09:16:31 +0000</strong> (In TryHackMe, you may have to enter 32 seconds).</p>
+                <strong>11/Apr/2021:09:16:31 +0000</strong> (In TryHackMe, you may have to enter 32 seconds).
+            </p>
 
             <p>Since we know that we were hit by a SQL injection attack, we need to determine what information may have
                 been stolen through it.</p>
@@ -247,7 +257,8 @@
             <p>Previously, we found out that two <code>.bak</code> files (<code>coupons_2013.md.bak</code> and
                 <code>www-data.bak</code>) were attempted to be downloaded using Feroxbuster. We also know that the FTP
                 service was used to gain access to those files because they were in the <code>/ftp</code> directory. If
-                you need a refresher, refer to the screenshot below.</p>
+                you need a refresher, refer to the screenshot below.
+            </p>
 
             <figure>
                 <img src="../images/ftp_access_log.jpg" alt="FTP Access Log">
@@ -262,7 +273,8 @@
             </figure>
             <br>
             <p>In the <code>vsftpd.log</code> file, it appears that an anonymous user accessed those two
-                <code>.bak</code> files.</p>
+                <code>.bak</code> files.
+            </p>
 
             <p>For our final step in analyzing these log files to complete the room, we have to figure out what service
                 and username were used to gain shell access to the server.</p>

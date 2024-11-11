@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Cache? - Ryan's Blog</title>
-    
+
     <!-- SEO Meta Description -->
-    <meta name="description" content="An overview of cache memory, how it improves performance, cache levels, hits and misses, placement policies, and write policies.">
-    
+    <meta name="description"
+        content="An overview of cache memory, how it improves performance, cache levels, hits and misses, placement policies, and write policies.">
+
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="What is Cache?">
-    <meta property="og:description" content="Learn about cache memory, its importance in computer systems, and how it enhances performance through different levels and policies.">
+    <meta property="og:description"
+        content="Learn about cache memory, its importance in computer systems, and how it enhances performance through different levels and policies.">
     <meta property="og:url" content="https://ryanlongoria.com/posts/what-is-cache.html">
     <meta property="og:type" content="article">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What is Cache?">
-    <meta name="twitter:description" content="An introduction to cache memory and its role in improving system performance.">
-    
+    <meta name="twitter:description"
+        content="An introduction to cache memory and its role in improving system performance.">
+
     <!-- Structured Data with Schema.org -->
     <script type="application/ld+json">
     {
@@ -43,17 +47,25 @@
         "image": "https://ryanlongoria.com/images/cache.jpg"
     }
     </script>
-    
+
     <!-- CSS Link -->
     <link rel="stylesheet" href="../css/styles.css">
-    
+
     <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" href="../my-favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../my-favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../my-favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../my-favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../my-favicon/site.webmanifest" />
 </head>
+
 <body>
     <!-- Particles.js Container -->
     <div id="particles-js"></div>
-    
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -87,38 +99,48 @@
             </nav>
         </div>
     </header>
-    
+
     <!-- Main Content -->
     <main class="main-container">
         <article class="post-content">
             <h1>What is Cache?</h1>
             <p><em>Published on 2022-05-03</em></p>
-    
+
             <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
-    
-            <p>Cache is a type of storage that improves access time to slower memory. It has a small storage space but is very fast. Copies of instructions and data of programs are held here to enhance access times.</p>
-    
+
+            <p>Cache is a type of storage that improves access time to slower memory. It has a small storage space but
+                is very fast. Copies of instructions and data of programs are held here to enhance access times.</p>
+
             <h2>How Does Cache Improve Performance Over Regular Storage?</h2>
             <p>Cache uses temporal and spatial locality to improve performance.</p>
-    
+
             <h3>Temporal Locality</h3>
-            <p>Temporal locality means that memory addresses that have been recently used are likely to be used again soon. For example, if you visit <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">www.google.com</a> in a web browser, that website address is saved because it's likely you'll access it again. When you revisit it, the page loads faster.</p>
-    
+            <p>Temporal locality means that memory addresses that have been recently used are likely to be used again
+                soon. For example, if you visit <a href="https://www.google.com" target="_blank"
+                    rel="noopener noreferrer">www.google.com</a> in a web browser, that website address is saved because
+                it's likely you'll access it again. When you revisit it, the page loads faster.</p>
+
             <h3>Spatial Locality</h3>
-            <p>Spatial locality means that if a memory address is used, nearby addresses are likely to be used as well. Continuing the example, when you search on Google, the subsequent pages or resources (which are near the original address) will load faster because they're stored in cache.</p>
-    
+            <p>Spatial locality means that if a memory address is used, nearby addresses are likely to be used as well.
+                Continuing the example, when you search on Google, the subsequent pages or resources (which are near the
+                original address) will load faster because they're stored in cache.</p>
+
             <h2>Levels of Cache</h2>
             <p>There are three levels of cache:</p>
-    
+
             <h3>L1 Cache</h3>
-            <p>This is the closest cache to the CPU computation units. It is separated into the data cache and instruction cache to avoid pipeline structural hazards. Each L1 cache holds up to 64KB with a 4ns latency per core.</p>
-    
+            <p>This is the closest cache to the CPU computation units. It is separated into the data cache and
+                instruction cache to avoid pipeline structural hazards. Each L1 cache holds up to 64KB with a 4ns
+                latency per core.</p>
+
             <h3>L2 Cache</h3>
-            <p>L2 Cache is slightly farther from the CPU than L1 but offers larger storage space. It usually combines the data and instruction caches. Each L2 cache holds up to 8MB with a 10ns latency per core.</p>
-    
+            <p>L2 Cache is slightly farther from the CPU than L1 but offers larger storage space. It usually combines
+                the data and instruction caches. Each L2 cache holds up to 8MB with a 10ns latency per core.</p>
+
             <h3>L3 Cache</h3>
-            <p>L3 Cache is located outside the CPU, making it slower to access but providing even larger memory capacity. Each L3 cache holds up to 64MB with a 20ns latency per core.</p>
-    
+            <p>L3 Cache is located outside the CPU, making it slower to access but providing even larger memory
+                capacity. Each L3 cache holds up to 64MB with a 20ns latency per core.</p>
+
             <h2>Comparison with Other Types of Memory</h2>
             <ul>
                 <li><strong>Register Memory:</strong> Holds up to 2KB with 1ns latency.</li>
@@ -126,22 +148,25 @@
                 <li><strong>SSD Storage:</strong> Minimum of 1GB with 5ms latency.</li>
                 <li><strong>HDD Storage:</strong> Minimum of 1GB with 10ms latency.</li>
             </ul>
-    
+
             <h2>Cache Hits and Misses</h2>
             <h3>Blocks/Cache Lines</h3>
-            <p>The minimum amount of data transferred is called a block or cache line. Blocks are checked at each level of cache.</p>
-    
+            <p>The minimum amount of data transferred is called a block or cache line. Blocks are checked at each level
+                of cache.</p>
+
             <h3>Cache Hit</h3>
             <p>A cache hit occurs when the requested data is found in the cache. The hit rate is calculated as:</p>
             <pre><code>Hit Rate = Hits / Total References</code></pre>
-    
+
             <h3>Cache Miss</h3>
-            <p>A cache miss happens when the requested data is not found in the cache. The miss rate is calculated as:</p>
+            <p>A cache miss happens when the requested data is not found in the cache. The miss rate is calculated as:
+            </p>
             <pre><code>Miss Rate = Misses / Total References</code></pre>
-            <p>There's a "miss penalty," which is the additional time required to fetch a block from a higher-level cache or memory when a miss occurs:</p>
+            <p>There's a "miss penalty," which is the additional time required to fetch a block from a higher-level
+                cache or memory when a miss occurs:</p>
             <pre><code>Miss Penalty = Access Time + Transfer Time</code></pre>
             <p>Cache misses can cause pipeline stalls, impacting overall performance.</p>
-    
+
             <h2>Cache Placement Policies</h2>
             <p>There are three main types of cache placement policies:</p>
             <ul>
@@ -149,18 +174,25 @@
                 <li><strong>Fully Associative</strong></li>
                 <li><strong>Set Associative</strong></li>
             </ul>
-    
+
             <h3>Direct Mapped</h3>
-            <p>In a direct-mapped cache, each memory block is mapped to exactly one cache line. Frame indexes can be computed quickly from memory addresses, allowing faster determination of hits or misses. However, it has a higher cache miss rate if the cache is small or if certain memory access patterns cause frequent collisions.</p>
+            <p>In a direct-mapped cache, each memory block is mapped to exactly one cache line. Frame indexes can be
+                computed quickly from memory addresses, allowing faster determination of hits or misses. However, it has
+                a higher cache miss rate if the cache is small or if certain memory access patterns cause frequent
+                collisions.</p>
             <p>A direct-mapped cache is essentially a set-associative cache with one way.</p>
-    
+
             <h3>Fully Associative</h3>
-            <p>In a fully associative cache, a memory block can be placed in any cache line. This flexibility results in fewer misses but requires more time to compare tags for each slot, even on cache hits. Control logic becomes more complex due to the need to check all possible locations.</p>
+            <p>In a fully associative cache, a memory block can be placed in any cache line. This flexibility results in
+                fewer misses but requires more time to compare tags for each slot, even on cache hits. Control logic
+                becomes more complex due to the need to check all possible locations.</p>
             <p>A fully associative cache is a set-associative cache with one set.</p>
-    
+
             <h3>Set Associative</h3>
-            <p>Set-associative cache combines aspects of direct mapping and full associativity. Blocks are mapped to a set of lines within the cache, reducing conflicts and miss rates compared to direct mapping while being faster than a fully associative cache. Determining the optimal number of ways can be challenging.</p>
-    
+            <p>Set-associative cache combines aspects of direct mapping and full associativity. Blocks are mapped to a
+                set of lines within the cache, reducing conflicts and miss rates compared to direct mapping while being
+                faster than a fully associative cache. Determining the optimal number of ways can be challenging.</p>
+
             <h2>Cache Replacement Policies</h2>
             <p>Common replacement policies include:</p>
             <ul>
@@ -169,37 +201,48 @@
                 <li><strong>Most Recently Used (MRU)</strong></li>
             </ul>
             <p>Modern processors typically use the LRU policy.</p>
-    
+
             <h3>Least Recently Used (LRU) Policy</h3>
-            <p>LRU replaces the cache line that has not been used for the longest period. It relies on tracking the access history of cache lines. While effective, LRU can be complex to implement in hardware, so approximations like Not Recently Used (NRU) or Clock algorithms are often used.</p>
-    
+            <p>LRU replaces the cache line that has not been used for the longest period. It relies on tracking the
+                access history of cache lines. While effective, LRU can be complex to implement in hardware, so
+                approximations like Not Recently Used (NRU) or Clock algorithms are often used.</p>
+
             <h2>The Three C's of Cache Misses</h2>
             <h3>Compulsory Misses</h3>
-            <p>Also known as cold start or first-reference misses, these occur when a cache line is accessed for the first time. The miss rate for compulsory misses is typically low.</p>
-    
+            <p>Also known as cold start or first-reference misses, these occur when a cache line is accessed for the
+                first time. The miss rate for compulsory misses is typically low.</p>
+
             <h3>Capacity Misses</h3>
-            <p>Capacity misses happen when the cache cannot contain all the blocks needed during program execution, leading to blocks being discarded and reloaded. Increasing cache size can reduce capacity misses.</p>
-    
+            <p>Capacity misses happen when the cache cannot contain all the blocks needed during program execution,
+                leading to blocks being discarded and reloaded. Increasing cache size can reduce capacity misses.</p>
+
             <h3>Conflict Misses</h3>
-            <p>Conflict misses occur when multiple blocks compete for the same cache line or set, especially in direct-mapped or low-associativity caches. Increasing the number of ways in a set-associative cache can reduce conflict misses.</p>
-    
+            <p>Conflict misses occur when multiple blocks compete for the same cache line or set, especially in
+                direct-mapped or low-associativity caches. Increasing the number of ways in a set-associative cache can
+                reduce conflict misses.</p>
+
             <h2>Write Policies</h2>
-            <p>In data cache traffic, writes account for a small percentage (approximately 21%), so optimizing for reads is often prioritized. Writes are handled "on the side."</p>
-    
+            <p>In data cache traffic, writes account for a small percentage (approximately 21%), so optimizing for reads
+                is often prioritized. Writes are handled "on the side."</p>
+
             <h3>Write Hit Policies</h3>
             <p>When a write operation hits data already in the cache:</p>
             <ul>
-                <li><strong>Write-Back:</strong> Data is written only to the cache, with the write to lower-level memory deferred until the cache line is evicted.</li>
-                <li><strong>Write-Through:</strong> Data is written to both the cache and lower-level memory simultaneously.</li>
+                <li><strong>Write-Back:</strong> Data is written only to the cache, with the write to lower-level memory
+                    deferred until the cache line is evicted.</li>
+                <li><strong>Write-Through:</strong> Data is written to both the cache and lower-level memory
+                    simultaneously.</li>
             </ul>
-    
+
             <h3>Write Miss Policies</h3>
             <p>When a write operation misses the cache:</p>
             <ul>
-                <li><strong>Write-Allocate:</strong> The cache allocates space for the missed cache line, and the write is performed there.</li>
-                <li><strong>No-Write-Allocate:</strong> The write bypasses the cache and is written directly to lower-level memory.</li>
+                <li><strong>Write-Allocate:</strong> The cache allocates space for the missed cache line, and the write
+                    is performed there.</li>
+                <li><strong>No-Write-Allocate:</strong> The write bypasses the cache and is written directly to
+                    lower-level memory.</li>
             </ul>
-    
+
             <h3>Write-Back and Write-Allocate</h3>
             <p><strong>Pros:</strong></p>
             <ul>
@@ -212,7 +255,7 @@
                 <li>Cache and DRAM can become inconsistent</li>
                 <li>Potential for increased cache miss rates upon eviction</li>
             </ul>
-    
+
             <h3>Write-Through and No-Write-Allocate</h3>
             <p><strong>Pros:</strong></p>
             <ul>
@@ -225,36 +268,42 @@
                 <li>Increased DRAM bandwidth and power usage</li>
                 <li>Slower write speed</li>
             </ul>
-    
+
             <h3>Write Buffer Flush Policy</h3>
-            <p>Write buffers improve write speed and reduce DRAM bandwidth, making them a suitable solution for write-through and no-write-allocate policies.</p>
-    
+            <p>Write buffers improve write speed and reduce DRAM bandwidth, making them a suitable solution for
+                write-through and no-write-allocate policies.</p>
+
             <h2>Conclusion</h2>
-            <p>Understanding cache memory and its associated policies is crucial for optimizing system performance. Cache leverages temporal and spatial locality to speed up data access, and various levels and policies help balance speed and storage capacity. By effectively managing cache hits and misses, placement, and write strategies, we can significantly enhance computing efficiency.</p>
+            <p>Understanding cache memory and its associated policies is crucial for optimizing system performance.
+                Cache leverages temporal and spatial locality to speed up data access, and various levels and policies
+                help balance speed and storage capacity. By effectively managing cache hits and misses, placement, and
+                write strategies, we can significantly enhance computing efficiency.</p>
         </article>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="gengar-shadow"></div>
             <div class="social">
                 <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
-                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
                 <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
         </div>
     </footer>
-    
+
     <!-- JavaScript Files -->
     <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    
+
     <!-- Custom Scripts -->
     <script src="../js/scripts.js"></script>
-    
+
     <!-- Prism.js for Syntax Highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
 </body>
+
 </html>
