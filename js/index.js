@@ -130,4 +130,38 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.setAttribute('aria-expanded', 'false');
         }
     });
+
+        // Category Filtering for Pinned Posts
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const posts = document.querySelectorAll('.posts .post');
+    
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+    
+                const filter = button.getAttribute('data-filter');
+    
+                posts.forEach(post => {
+                    if (filter === 'all' || post.getAttribute('data-category') === filter) {
+                        post.style.display = 'block';
+                        // Optionally, trigger fade-in effect
+                        setTimeout(() => {
+                            post.classList.add('visible');
+                        }, 100);
+                    } else {
+                        post.style.display = 'none';
+                        post.classList.remove('visible');
+                    }
+                });
+            });
+        });
+    
+        // Initialize by showing all posts and setting 'All' as active
+        const defaultFilterButton = document.querySelector('.filter-btn[data-filter="all"]');
+        if (defaultFilterButton) {
+            defaultFilterButton.click();
+        }
 });
