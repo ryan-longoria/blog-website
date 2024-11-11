@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Instruction Set Architecture (ISA)? - Ryan's Blog</title>
-    
+
     <!-- SEO Meta Description -->
-    <meta name="description" content="Learn about Instruction Set Architecture (ISA), its components, addressing modes, and the differences between CISC and RISC architectures.">
-    
+    <meta name="description"
+        content="Learn about Instruction Set Architecture (ISA), its components, addressing modes, and the differences between CISC and RISC architectures.">
+
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="What is Instruction Set Architecture (ISA)?">
-    <meta property="og:description" content="Explore ISA as the bridge between hardware and software, and understand its syntax, operands, and implementations.">
+    <meta property="og:description"
+        content="Explore ISA as the bridge between hardware and software, and understand its syntax, operands, and implementations.">
     <meta property="og:url" content="https://ryanlongoria.com/posts/what-is-isa.html">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://ryanlongoria.com/images/isa_banner.jpg">
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What is Instruction Set Architecture (ISA)?">
-    <meta name="twitter:description" content="Discover the basics of ISA, its role in computing, and the comparison between CISC and RISC.">
+    <meta name="twitter:description"
+        content="Discover the basics of ISA, its role in computing, and the comparison between CISC and RISC.">
     <meta name="twitter:image" content="https://ryanlongoria.com/images/isa_banner.jpg">
-    
+
     <!-- Structured Data with Schema.org -->
     <script type="application/ld+json">
     {
@@ -45,13 +49,14 @@
       "image": "https://ryanlongoria.com/images/isa_banner.jpg"
     }
     </script>
-    
+
     <!-- CSS Link -->
     <link rel="stylesheet" href="../css/styles.css">
-    
+
     <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <!-- Particles.js Container -->
     <div id="particles-js"></div>
@@ -98,12 +103,17 @@
 
             <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
 
-            <p>“Instruction Set Architecture is the structure of a computer that a machine language programmer (or a compiler) must understand to write a correct (timing-independent) program for that machine.” — IBM introducing 360 (1964)</p>
+            <p>“Instruction Set Architecture is the structure of a computer that a machine language programmer (or a
+                compiler) must understand to write a correct (timing-independent) program for that machine.” — IBM
+                introducing 360 (1964)</p>
 
-            <p>ISA can be seen as a bridge between hardware and software. It gathers the operations that a processor can execute and transfers them to the microarchitecture for further implementation.</p>
+            <p>ISA can be seen as a bridge between hardware and software. It gathers the operations that a processor can
+                execute and transfers them to the microarchitecture for further implementation.</p>
 
             <h2>Instruction Syntaxes</h2>
-            <p>Instructions are what ISA uses to execute tasks. An instruction usually consists of an operator (<code>op</code>), source operands (<code>src</code>), and a destination operand (<code>dest</code>).</p>
+            <p>Instructions are what ISA uses to execute tasks. An instruction usually consists of an operator
+                (<code>op</code>), source operands (<code>src</code>), and a destination operand (<code>dest</code>).
+            </p>
 
             <h3>Common Syntax Examples:</h3>
             <ul>
@@ -123,7 +133,9 @@ sw src, dest</code></pre>
             </ul>
 
             <h2>Arithmetic Logic Unit (ALU)</h2>
-            <p>The ALU is a digital electronic circuit designed to perform arithmetic operations on integer source operands. These operands can originate from the Stack, Accumulator, Registers, or memory. After receiving operations from any of these sources, it produces a result.</p>
+            <p>The ALU is a digital electronic circuit designed to perform arithmetic operations on integer source
+                operands. These operands can originate from the Stack, Accumulator, Registers, or memory. After
+                receiving operations from any of these sources, it produces a result.</p>
 
             <figure>
                 <img src="../images/alu_diagram.jpg" alt="Arithmetic Logic Unit Diagram">
@@ -131,14 +143,17 @@ sw src, dest</code></pre>
             </figure>
 
             <h2>ISA Operands</h2>
-            <p>As mentioned before, the ALU performs arithmetic operations on source operands provided by the Stack, Accumulator, Registers, or memory. Let's dive deeper into each one!</p>
+            <p>As mentioned before, the ALU performs arithmetic operations on source operands provided by the Stack,
+                Accumulator, Registers, or memory. Let's dive deeper into each one!</p>
 
             <h3>Stack</h3>
-            <p>The stack acts as a source or a destination, and it uses a push/pop structure with one explicit operand. Let's use an example to illustrate this:</p>
+            <p>The stack acts as a source or a destination, and it uses a push/pop structure with one explicit operand.
+                Let's use an example to illustrate this:</p>
 
             <p><strong>C = A + B</strong></p>
 
-            <p>Think of the stack like a stack of pancakes. We push operand A onto the stack, then operand B. We then perform the addition operation, and the result is stored in C.</p>
+            <p>Think of the stack like a stack of pancakes. We push operand A onto the stack, then operand B. We then
+                perform the addition operation, and the result is stored in C.</p>
 
             <figure>
                 <img src="../images/stack_example.jpg" alt="Stack Operation Example">
@@ -146,18 +161,23 @@ sw src, dest</code></pre>
             </figure>
 
             <h3>Accumulator</h3>
-            <p>The accumulator is a single implicit register that acts as a source or destination. It can become a performance bottleneck due to its implicit implementation.</p>
+            <p>The accumulator is a single implicit register that acts as a source or destination. It can become a
+                performance bottleneck due to its implicit implementation.</p>
 
-            <p>Using the example <strong>C = A + B</strong> again, A is loaded into the accumulator first, then B is added to it. The sum is then stored in C.</p>
+            <p>Using the example <strong>C = A + B</strong> again, A is loaded into the accumulator first, then B is
+                added to it. The sum is then stored in C.</p>
 
             <h3>Register-Register/Load-Store</h3>
-            <p>In this model, registers hold operands, but the actual values are stored in memory. Registers must load these values before sending them to the ALU. Most RISC architectures use this format.</p>
+            <p>In this model, registers hold operands, but the actual values are stored in memory. Registers must load
+                these values before sending them to the ALU. Most RISC architectures use this format.</p>
 
             <h3>Register-Memory</h3>
-            <p>Operands are read from memory and registers. Most x86 architectures use this format, and operands can be anywhere in memory or registers. This format is common in CISC architectures.</p>
+            <p>Operands are read from memory and registers. Most x86 architectures use this format, and operands can be
+                anywhere in memory or registers. This format is common in CISC architectures.</p>
 
             <h2>Addressing Modes</h2>
-            <p>Addressing modes specify how operands are loaded from memory or registers. Below are some common addressing modes with x86 format examples:</p>
+            <p>Addressing modes specify how operands are loaded from memory or registers. Below are some common
+                addressing modes with x86 format examples:</p>
 
             <h3>Register</h3>
             <p>Operands are located in registers.</p>
@@ -180,7 +200,8 @@ sw src, dest</code></pre>
             <pre><code>add R1, R2, [R3 + R4]</code></pre>
 
             <h3>Two-Dimensional Array Example</h3>
-            <p>Two-dimensional arrays can be tricky in assembly. Let's consider an array <code>x[5][7]</code> with 10 elements per row and 8 bytes per element.</p>
+            <p>Two-dimensional arrays can be tricky in assembly. Let's consider an array <code>x[5][7]</code> with 10
+                elements per row and 8 bytes per element.</p>
 
             <p>The offset calculation is:</p>
             <pre><code>Offset = Row * Number of Columns * Size of Element
@@ -214,9 +235,12 @@ Offset = 5 * 10 * 8 = 400 bytes</code></pre>
             </ul>
 
             <h2>CISC vs RISC Architecture</h2>
-            <p>Complex Instruction Set Computer (CISC) aims to reduce the number of instructions per program while increasing the cycles per instruction. Reduced Instruction Set Computer (RISC) aims to reduce the cycles per instruction at the cost of increasing the number of instructions per program.</p>
+            <p>Complex Instruction Set Computer (CISC) aims to reduce the number of instructions per program while
+                increasing the cycles per instruction. Reduced Instruction Set Computer (RISC) aims to reduce the cycles
+                per instruction at the cost of increasing the number of instructions per program.</p>
 
-            <p>Most modern processors utilize RISC architecture. Examples include MIPS, RISC-V, and ARM. CISC architectures include x86 and VAX.</p>
+            <p>Most modern processors utilize RISC architecture. Examples include MIPS, RISC-V, and ARM. CISC
+                architectures include x86 and VAX.</p>
 
             <h3>CISC Advantages</h3>
             <ul>
@@ -234,7 +258,8 @@ Offset = 5 * 10 * 8 = 400 bytes</code></pre>
             </ul>
 
             <h2>SIMD</h2>
-            <p>Single Instruction Multiple Data (SIMD) performs the same mathematical operation on multiple data points simultaneously using one instruction. It's used in MMX, 3DNow!, AVX, and SSE.</p>
+            <p>Single Instruction Multiple Data (SIMD) performs the same mathematical operation on multiple data points
+                simultaneously using one instruction. It's used in MMX, 3DNow!, AVX, and SSE.</p>
 
             <h2>Five Stages of ISA Implementations</h2>
             <figure>
@@ -243,15 +268,22 @@ Offset = 5 * 10 * 8 = 400 bytes</code></pre>
             </figure>
 
             <ol>
-                <li><strong>Instruction Fetch (IF):</strong> The instruction is read from the program counter. Components: Adder, Memory Unit.</li>
-                <li><strong>Instruction Decode/Register Fetch (ID):</strong> Decodes the instruction and reads source operands. Components: Register File, Sign Extender.</li>
-                <li><strong>Execute/Address Calculation (EX):</strong> Performs arithmetic or logical operations. Components: ALU, Zero Flag.</li>
-                <li><strong>Memory Access (MEM):</strong> Accesses memory and completes branch instructions. Components: Memory Unit.</li>
-                <li><strong>Write-Back (WB):</strong> Writes results back into registers. Components: Register File.</li>
+                <li><strong>Instruction Fetch (IF):</strong> The instruction is read from the program counter.
+                    Components: Adder, Memory Unit.</li>
+                <li><strong>Instruction Decode/Register Fetch (ID):</strong> Decodes the instruction and reads source
+                    operands. Components: Register File, Sign Extender.</li>
+                <li><strong>Execute/Address Calculation (EX):</strong> Performs arithmetic or logical operations.
+                    Components: ALU, Zero Flag.</li>
+                <li><strong>Memory Access (MEM):</strong> Accesses memory and completes branch instructions. Components:
+                    Memory Unit.</li>
+                <li><strong>Write-Back (WB):</strong> Writes results back into registers. Components: Register File.
+                </li>
             </ol>
 
             <h2>Conclusion</h2>
-            <p>ISA is the foundation of computer architecture, acting as the vital link between hardware and software. Understanding its components, addressing modes, and implementations is key to mastering the world of computing.</p>
+            <p>ISA is the foundation of computer architecture, acting as the vital link between hardware and software.
+                Understanding its components, addressing modes, and implementations is key to mastering the world of
+                computing.</p>
         </article>
     </main>
 
@@ -261,7 +293,8 @@ Offset = 5 * 10 * 8 = 400 bytes</code></pre>
             <div class="gengar-shadow"></div>
             <div class="social">
                 <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
-                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
                 <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
         </div>
@@ -278,4 +311,5 @@ Offset = 5 * 10 * 8 = 400 bytes</code></pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
 </body>
+
 </html>

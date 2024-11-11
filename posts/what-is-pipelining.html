@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What is Pipelining? - Ryan's Blog</title>
-    
+
     <!-- SEO Meta Description -->
-    <meta name="description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+    <meta name="description"
+        content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
 
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta property="og:title" content="What is Pipelining?">
-    <meta property="og:description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+    <meta property="og:description"
+        content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
     <meta property="og:url" content="https://ryanlongoria.com/posts/what-is-pipelining.html">
     <meta property="og:type" content="article">
     <meta property="og:image" content="https://ryanlongoria.com/images/what-is-pipelining.jpg">
@@ -18,7 +21,8 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="What is Pipelining?">
-    <meta name="twitter:description" content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
+    <meta name="twitter:description"
+        content="Learn about pipelining in computer processors, including its benefits and solutions to hazards such as structural, data, and control hazards.">
     <meta name="twitter:image" content="https://ryanlongoria.com/images/what-is-pipelining.jpg">
 
     <!-- Structured Data with Schema.org -->
@@ -52,6 +56,7 @@
     <!-- Prism.js for Syntax Highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <!-- Particles.js Container -->
     <div id="particles-js"></div>
@@ -98,16 +103,24 @@
 
             <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
 
-            <p>Computer instructions will overlap in a processor and the way these processes work gets done through pipelining. You can think of assembly lines in the same way and how their processes overlap to get things done faster.</p>
+            <p>Computer instructions will overlap in a processor and the way these processes work gets done through
+                pipelining. You can think of assembly lines in the same way and how their processes overlap to get
+                things done faster.</p>
 
             <h2>Benefits of Pipelining</h2>
-            <p>Imagine a computer trying to run Google Chrome and Microsoft Word. Without pipelining, Google Chrome needs to run completely before Microsoft Word can even think about opening up. With pipelining, what you probably experience in your computer, if you open both at the same time, they will open at the same time and fairly quickly too.</p>
+            <p>Imagine a computer trying to run Google Chrome and Microsoft Word. Without pipelining, Google Chrome
+                needs to run completely before Microsoft Word can even think about opening up. With pipelining, what you
+                probably experience in your computer, if you open both at the same time, they will open at the same time
+                and fairly quickly too.</p>
 
             <h2>Types of Hazards</h2>
-            <p>Instruction pipelining can bring some hazards in many situations. This is the cost of trying to be as efficient as possible. Luckily, there are solutions to many of these problems and this is what I’ll be touching upon in this blog!</p>
+            <p>Instruction pipelining can bring some hazards in many situations. This is the cost of trying to be as
+                efficient as possible. Luckily, there are solutions to many of these problems and this is what I’ll be
+                touching upon in this blog!</p>
 
             <h3>1. Structural Hazards</h3>
-            <p>When instructions overlap, it is important for them to not consume the same hardware resource if there isn’t enough hardware for them. This is defined as a structural hazard.</p>
+            <p>When instructions overlap, it is important for them to not consume the same hardware resource if there
+                isn’t enough hardware for them. This is defined as a structural hazard.</p>
             <p><strong>Solutions:</strong></p>
             <ul>
                 <li>Separate hardware resources (e.g., data memory vs instruction memory).</li>
@@ -116,7 +129,8 @@
             </ul>
 
             <h3>2. Data Hazards</h3>
-            <p>If an instruction depends on the result of the previous instruction, that would be a hazard since instructions would overlap.</p>
+            <p>If an instruction depends on the result of the previous instruction, that would be a hazard since
+                instructions would overlap.</p>
             <p><strong>Solutions:</strong></p>
             <ul>
                 <li>Stall the pipeline to wait for older instructions to complete.</li>
@@ -133,7 +147,10 @@
             </ul>
 
             <h2>Conclusion</h2>
-            <p>Pipelining is a powerful tool in modern computing, enabling faster execution of tasks by overlapping processes. Although it introduces hazards like structural, data, and control issues, various solutions mitigate these risks to ensure efficiency and reliability. Understanding pipelining is key to optimizing processor performance and addressing its challenges effectively.</p>
+            <p>Pipelining is a powerful tool in modern computing, enabling faster execution of tasks by overlapping
+                processes. Although it introduces hazards like structural, data, and control issues, various solutions
+                mitigate these risks to ensure efficiency and reliability. Understanding pipelining is key to optimizing
+                processor performance and addressing its challenges effectively.</p>
         </article>
     </main>
 
@@ -143,7 +160,8 @@
             <div class="gengar-shadow"></div>
             <div class="social">
                 <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
-                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank"
+                    rel="noopener noreferrer">LinkedIn</a> |
                 <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
         </div>
@@ -155,4 +173,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
 </body>
+
 </html>

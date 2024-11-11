@@ -1,5 +1,7 @@
 /* Reset CSS */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,7 +14,8 @@
     --gengar-light: #9d5de5;
     --gengar-white: #ffffff;
     --gengar-accent: #e8491d;
-    --spacing-unit: 20px; /* Added for consistent spacing */
+    --spacing-unit: 20px;
+    /* Added for consistent spacing */
 }
 
 /* Body */
@@ -33,9 +36,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Behind all other content */
-    pointer-events: none; /* Allows clicks through the particles */
-    background-color: var(--gengar-dark); /* Fallback background color */
+    z-index: -1;
+    /* Behind all other content */
+    pointer-events: none;
+    /* Allows clicks through the particles */
+    background-color: var(--gengar-dark);
+    /* Fallback background color */
 }
 
 /* Header Container */
@@ -49,25 +55,33 @@ header .container {
 /* Logo Container Flexbox */
 .logo-container {
     display: flex;
-    align-items: center; /* Vertically center logo and title */
+    align-items: center;
+    /* Vertically center logo and title */
     flex-wrap: nowrap;
 }
 
 /* Logo Styling */
 header .logo img {
-    width: 100px; /* Desired width */
-    height: auto; /* Maintain aspect ratio */
-    max-width: 100%; /* Ensure responsiveness */
-    display: block; /* Remove any inline spacing */
+    width: 100px;
+    /* Desired width */
+    height: auto;
+    /* Maintain aspect ratio */
+    max-width: 100%;
+    /* Ensure responsiveness */
+    display: block;
+    /* Remove any inline spacing */
 }
 
 /* Banner Title Styling */
 .banner-title {
-    font-size: 2rem; /* Adjust as needed */
+    font-size: 2rem;
+    /* Adjust as needed */
     color: var(--gengar-white);
-    margin-left: 20px; /* Space between logo and title */
+    margin-left: 20px;
+    /* Space between logo and title */
     font-weight: bold;
-    white-space: nowrap; /* Prevent title from breaking into multiple lines */
+    white-space: nowrap;
+    /* Prevent title from breaking into multiple lines */
 }
 
 /* Navigation */
@@ -90,8 +104,10 @@ nav ul li a {
     color: var(--gengar-white);
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.2rem; /* Increased font size */
-    padding: 10px 15px; /* Added padding */
+    font-size: 1.2rem;
+    /* Increased font size */
+    padding: 10px 15px;
+    /* Added padding */
     transition: color 0.3s ease, transform 0.2s ease;
 }
 
@@ -166,7 +182,8 @@ nav ul li a:hover {
     nav ul {
         flex-direction: column;
         width: 100%;
-        display: none; /* Hidden by default */
+        display: none;
+        /* Hidden by default */
     }
 
     nav ul li {
@@ -186,18 +203,21 @@ nav ul li a:hover {
 
 @media (max-width: 480px) {
     header .logo img {
-        width: 100px; /* Even smaller logo on mobile devices */
+        width: 100px;
+        /* Even smaller logo on mobile devices */
     }
 
     .banner-title {
-        font-size: 1.2rem; /* Smaller on mobile */
+        font-size: 1.2rem;
+        /* Smaller on mobile */
         margin-left: 0;
         margin-top: 10px;
         text-align: center;
     }
 
     .logo-container {
-        justify-content: center; /* Center items on mobile */
+        justify-content: center;
+        /* Center items on mobile */
     }
 
     nav ul {
@@ -212,13 +232,17 @@ nav ul li a:hover {
 
 /* Main Content */
 .main-container {
-    display: block; /* Ensure block layout */
-    padding: 20px 0; /* Add vertical padding */
+    display: block;
+    /* Ensure block layout */
+    padding: 20px 0;
+    /* Add vertical padding */
 }
 
 .main-container h1 {
-    text-align: center; /* Center the heading */
-    margin-bottom: 20px; /* Space below the heading */
+    text-align: center;
+    /* Center the heading */
+    margin-bottom: 20px;
+    /* Space below the heading */
     color: var(--gengar-purple);
 }
 
@@ -229,10 +253,12 @@ nav ul li a:hover {
     border-left: 4px solid var(--gengar-accent);
     border-radius: 8px;
     max-width: 800px;
-    margin: 0 auto 40px auto; /* Center and add bottom margin */
+    margin: 0 auto 40px auto;
+    /* Center and add bottom margin */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: var(--gengar-dark);
-    text-align: center; /* Center the text */
+    text-align: center;
+    /* Center the text */
 }
 
 /* Blog Post Content */
@@ -242,7 +268,8 @@ nav ul li a:hover {
     border-left: 4px solid var(--gengar-accent);
     border-radius: 8px;
     max-width: 800px;
-    margin: 0 auto; /* Center the post */
+    margin: 0 auto;
+    /* Center the post */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: var(--gengar-dark);
 }
@@ -319,8 +346,10 @@ nav ul li a:hover {
 
 .posts h2 {
     text-align: center;
-    margin-bottom: 30px; /* Optional: Adds space below the heading */
-    color: var(--gengar-purple); /* Ensures consistency with your color palette */
+    margin-bottom: 30px;
+    /* Optional: Adds space below the heading */
+    color: var(--gengar-purple);
+    /* Ensures consistency with your color palette */
 }
 
 .post-content a[href*="categories/"],
@@ -340,25 +369,33 @@ footer {
     background: var(--gengar-dark);
     color: var(--gengar-white);
     text-align: center;
-    padding: 40px 0; /* Increased padding to accommodate shadow */
+    padding: 40px 0;
+    /* Increased padding to accommodate shadow */
     margin-top: 40px;
-    position: relative; /* Establishes a positioning context for the pseudo-element */
-    z-index: 1; /* Above particles */
+    position: relative;
+    /* Establishes a positioning context for the pseudo-element */
+    z-index: 1;
+    /* Above particles */
 }
 
 footer::before {
     content: '';
-    width: 80px; /* Adjust size as needed */
-    height: 80px; /* Adjust size as needed */
-    background-image: url('images/gengar-shadow.png'); /* Updated path */
+    width: 80px;
+    /* Adjust size as needed */
+    height: 80px;
+    /* Adjust size as needed */
+    background-image: url('images/gengar-shadow.png');
+    /* Updated path */
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0.2;
     position: absolute;
-    bottom: 20px; /* Positions the shadow within the footer */
+    bottom: 20px;
+    /* Positions the shadow within the footer */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 0; /* Behind the .social links */
+    z-index: 0;
+    /* Behind the .social links */
 }
 
 
@@ -370,7 +407,8 @@ footer .gengar-shadow {
     background-repeat: no-repeat;
     opacity: 0.2;
     position: absolute;
-    top: -40px; /* Increased from -50px to -70px */
+    top: -40px;
+    /* Increased from -50px to -70px */
     left: 50%;
     transform: translateX(-50%);
 }
@@ -380,9 +418,11 @@ footer p {
 }
 
 footer .social {
-    margin-top: 10px; /* Space above social links */
+    margin-top: 10px;
+    /* Space above social links */
     position: relative;
-    z-index: 2; /* Higher than the default z-index of .gengar-shadow */
+    z-index: 2;
+    /* Higher than the default z-index of .gengar-shadow */
 }
 
 footer .social a {
@@ -453,7 +493,8 @@ body.dark-mode .contact-form button:hover {
     border: 2px solid var(--gengar-accent);
     border-radius: 8px;
     max-width: 600px;
-    margin: 0 auto; /* Center the form */
+    margin: 0 auto;
+    /* Center the form */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -462,7 +503,8 @@ body.dark-mode .contact-form button:hover {
 }
 
 .contact-form label {
-    display: block; /* Arrange label above input */
+    display: block;
+    /* Arrange label above input */
     margin-bottom: 5px;
     font-weight: bold;
     color: var(--gengar-white);
@@ -509,10 +551,12 @@ body.dark-mode .contact-form button:hover {
     border-left: 4px solid var(--gengar-accent);
     border-radius: 8px;
     max-width: 800px;
-    margin: 0 auto 40px auto; /* Center and add bottom margin */
+    margin: 0 auto 40px auto;
+    /* Center and add bottom margin */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: var(--gengar-dark);
-    text-align: center; /* Center the text */
+    text-align: center;
+    /* Center the text */
 }
 
 /* Additional Styles for Posts */
@@ -523,14 +567,18 @@ body.dark-mode .contact-form button:hover {
     border-left: 4px solid var(--gengar-accent);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    opacity: 0; /* Hidden by default */
-    transform: translateY(20px); /* Slightly shifted down */
+    opacity: 0;
+    /* Hidden by default */
+    transform: translateY(20px);
+    /* Slightly shifted down */
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .posts .post.visible {
-    opacity: 1; /* Fully visible */
-    transform: translateY(0); /* Reset position */
+    opacity: 1;
+    /* Fully visible */
+    transform: translateY(0);
+    /* Reset position */
 }
 
 .posts .post h3 {
@@ -544,23 +592,30 @@ body.dark-mode .contact-form button:hover {
 
 /* Latest Posts Section */
 .posts {
-    max-width: 800px; /* Align with other content blocks */
-    margin: 40px auto; /* 40px top and bottom, auto left and right to center */
-    padding: 0 20px; /* Optional: Add horizontal padding for better readability */
+    max-width: 800px;
+    /* Align with other content blocks */
+    margin: 40px auto;
+    /* 40px top and bottom, auto left and right to center */
+    padding: 0 20px;
+    /* Optional: Add horizontal padding for better readability */
 }
 
 /* Responsive Margins for Latest Posts */
 @media (max-width: 768px) {
     .posts {
-        margin: 20px auto; /* Reduce margin on smaller screens */
-        padding: 0 10px; /* Adjust padding */
+        margin: 20px auto;
+        /* Reduce margin on smaller screens */
+        padding: 0 10px;
+        /* Adjust padding */
     }
 }
 
 @media (max-width: 480px) {
     .posts {
-        margin: 10px auto; /* Further reduce margin */
-        padding: 0 5px; /* Further adjust padding */
+        margin: 10px auto;
+        /* Further reduce margin */
+        padding: 0 5px;
+        /* Further adjust padding */
     }
 }
 
@@ -613,7 +668,7 @@ body.dark-mode .contact-form button:hover {
     position: absolute;
     background-color: var(--gengar-dark);
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
@@ -648,7 +703,8 @@ body.dark-mode .contact-form button:hover {
     }
 
     .dropdown:hover .dropdown-content {
-        display: none; /* Disable hover on mobile */
+        display: none;
+        /* Disable hover on mobile */
     }
 
     /* Show dropdown on active state via JavaScript */
