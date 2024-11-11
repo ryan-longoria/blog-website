@@ -169,18 +169,21 @@ filterButtons.forEach(button => {
 
 // Initialize by showing all posts
 document.addEventListener('DOMContentLoaded', () => {
-    const elementsToFade = document.querySelectorAll('.post');
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
+    const elementsToFade = document.querySelectorAll('.post, .contact-form, .post-content');
 
     elementsToFade.forEach(element => {
-        observer.observe(element);
+        if (element.getBoundingClientRect().top <= window.innerHeight) {
+            element.classList.add('visible');
+        } else {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            observer.observe(element);
+        }
     });
 });

