@@ -29,6 +29,26 @@ body {
     padding: 0;
 }
 
+/* Smartphones (portrait and landscape) */
+@media only screen and (max-width: 600px) {
+    /* Styles */
+}
+
+/* Tablets */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    /* Styles */
+}
+
+/* Small laptops */
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    /* Styles */
+}
+
+/* Desktops */
+@media only screen and (min-width: 992px) {
+    /* Styles */
+}
+
 /* Particles.js */
 #particles-js {
     position: fixed;
@@ -44,6 +64,12 @@ body {
     /* Fallback background color */
 }
 
+/* Header */
+header {
+    position: relative;
+    z-index: 1;
+}
+
 /* Header Container */
 header .container {
     display: flex;
@@ -54,6 +80,8 @@ header .container {
 
 /* Logo Container Flexbox */
 .logo-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     align-items: center;
     /* Vertically center logo and title */
@@ -91,6 +119,8 @@ nav {
 }
 
 nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
     list-style: none;
     display: flex;
     align-items: center;
@@ -138,6 +168,7 @@ nav ul li a:hover {
     flex-direction: column;
     cursor: pointer;
     margin-left: 20px;
+    z-index: 2;
 }
 
 .menu-toggle .bar {
@@ -177,6 +208,7 @@ nav ul li a:hover {
         margin-left: 0;
         margin-top: 10px;
         text-align: center;
+        font-size: 1.5rem;
     }
 
     nav ul {
@@ -189,6 +221,10 @@ nav ul li a:hover {
     nav ul li {
         margin-left: 0;
         margin-bottom: 10px;
+    }
+
+    nav ul li a {
+        font-size: 1rem;
     }
 
     .menu-toggle {
@@ -698,6 +734,10 @@ body.dark-mode .contact-form button:hover {
     display: block;
 }
 
+.dropdown-content.show {
+    display: block;
+}
+
 /* Adjustments for Mobile */
 @media (max-width: 768px) {
     .dropdown {
@@ -814,27 +854,33 @@ body.dark-mode .contact-form button:hover {
     max-height: 200px;
     overflow-y: auto;
     display: none;
-  }
-  
-  .suggestion-item {
+}
+
+.suggestion-item {
     padding: 10px;
     cursor: pointer;
-  }
-  
-  .suggestion-item:hover,
-  .suggestion-item.selected {
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
     background-color: #f0f0f0;
-  }
-  
-  .suggestion-item a {
+}
+
+.suggestion-item a {
     text-decoration: none;
     color: #333;
-  }
-  
-  .suggestion-item a strong {
+}
+
+.suggestion-item a strong {
     font-weight: bold;
-  }
-  
-  .suggestion-item a small {
+}
+
+.suggestion-item a small {
     color: #666;
-  }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
