@@ -89,6 +89,13 @@
       "excerpt": "An analysis of the Apache Log4j vulnerability CVE-2021-44228, exploring exploitation techniques, mitigation strategies, and a walkthrough of TryHackMe's 'Solar' room.",
       "category": "incident-response",
       "date": "2022-01-19"
+    },
+    {
+        "title": "TryHackMe Advent of Cyber 2024 Day 1 Write-Up",
+        "url": "posts/tryhackme-advent-of-cyber-2024-day1.html",
+        "excerpt": "Explore a seemingly harmless YouTube-to-MP3 converter that actually hides a malicious PowerShell script designed to steal cryptocurrency wallets and credentials.",
+        "category": "misc"
+        "date": "2024-12-15"
     }
   ]
   
