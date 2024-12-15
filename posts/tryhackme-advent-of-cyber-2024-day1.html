@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryHackMe Advent of Cyber 2024 Day 1 Write-Up - Ryan's Blog</title>
+    
+    <!-- SEO Meta Description -->
+    <meta name="description" content="Dive into TryHackMe Advent of Cyber 2024 Day 1, where we investigate a suspicious YouTube-to-MP3 converter loaded with malware. Learn about the hidden PowerShell script stealing wallet files and credentials.">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="TryHackMe Advent of Cyber 2024 Day 1 Write-Up">
+    <meta property="og:description" content="Investigate the malicious YouTube-to-MP3 converter from TryHackMe Advent of Cyber 2024 Day 1, featuring a hidden PowerShell script stealing crypto wallets and credentials.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/tryhackme-advent-of-cyber-2024-day1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/tryhackme-advent-of-cyber-2024-day1.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TryHackMe Advent of Cyber 2024 Day 1 Write-Up">
+    <meta name="twitter:description" content="Uncover the first challenge of TryHackMe Advent of Cyber 2024—malicious downloads, suspicious PowerShell commands, and stolen credentials.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/tryhackme-advent-of-cyber-2024-day1.jpg">
+    
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "TryHackMe Advent of Cyber 2024 Day 1 Write-Up",
+      "description": "Dive into TryHackMe Advent of Cyber 2024 Day 1, where we investigate a suspicious YouTube-to-MP3 converter loaded with malware. Learn about the hidden PowerShell script stealing wallet files and credentials.",
+      "author": {
+        "@type": "Person",
+        "name": "Ryan Longoria"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ryan Longoria's Blog",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ryanlongoria.com/images/gengar_logo.png"
+        }
+      },
+      "datePublished": "2024-12-15",
+      "url": "https://ryanlongoria.com/posts/tryhackme-advent-of-cyber-2024-day1.html",
+      "image": "https://ryanlongoria.com/images/tryhackme-advent-of-cyber-2024-day1.jpg"
+    }
+    </script>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <article class="post-content">
+            <h1>TryHackMe Advent of Cyber 2024 Day 1 Write-Up</h1>
+            <p><em>Published on 2024-12-15</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
+
+            <p>Welcome to my write-up for Day 1 of TryHackMe’s Advent of Cyber 2024! Today, we kick things off by exploring a suspicious host provided in our virtual machine (VM) and attackbox environment. At first glance, it appears to be a simple YouTube-to-MP3 converter. However, these types of sites—especially in the early 2010s—were notorious for bundling malware, phishing scams, or malvertising. I actually fell victim to one of these when I was about 10 years old, just trying to download free music onto my budget MP3 player.</p>
+
+            <!-- Content Sections -->
+            <p>Since we’re in a VM, it’s safe to test out the converter. Let’s try converting and downloading a file.</p>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_1.jpg" alt="YouTube-to-MP3 converter screenshot">
+            </figure>
+
+            <p>I pasted in a YouTube video—<em>Rollin'</em> by Limp Bizkit, which, funnily enough, might have been the exact song I tried to download when I was 10. The converter then prompted me to download a suspicious ZIP file, supposedly containing our newly converted MP3.</p>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_2.jpg" alt="Downloading the suspicious file screenshot">
+            </figure>
+
+            <p>Sure enough, after extraction, we end up with two files: <code>somg.mp3</code> and <code>song.mp3</code>.</p>
+
+            
+            <figure>
+                <img src="../images/advent_of_cyber_day1_3.jpg" alt="The extracted files">
+            </figure>
+              
+            <p>Next, I opened a terminal and used the <code>file</code> command to see if anything stood out.</p>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_4.jpg" alt="Using the file command on the suspicious files">
+            </figure>
+
+            <p>The output reveals that <code>song.mp3</code> is likely a legitimate audio file, while <code>somg.mp3</code> is actually a Windows shortcut. Let’s dig deeper with ExifTool to gather more metadata.</p>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_5.jpg" alt="ExifTool analysis screenshot">
+            </figure>
+
+            <p>We can see this file tries to run a PowerShell command with <code>-ep bypass -nop</code> flags, disabling PowerShell restrictions. It then uses <code>DownloadFile</code> to grab a remote script and save it in <code>C:\ProgramData\</code>. After downloading, it executes <code>s.ps1</code> via the <code>iex</code> command (Invoke-Expression). This is a classic tactic for fetching and running malicious payloads.</p>
+
+            <p>Curious about what that script contains, we open the link in a web browser and find a PowerShell script specifically designed to:</p>
+            <ul>
+                <li>Search for Bitcoin, Ethereum, Monero, and Dogecoin wallet files</li>
+                <li>Locate Chrome and Firefox credential files</li>
+                <li>Bundle all stolen data into <code>stolen_info.txt</code></li>
+                <li>Send it to a remote Command and Control (C2) server</li>
+            </ul>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_6.jpg" alt="Contents of the malicious PowerShell script">
+            </figure>
+
+            <p>In the script, we notice a comment stating: <strong>“Created by the one and only M.M.”</strong> A quick GitHub search for this string leads us to a repository issue discussing this exact script and tying it to a GitHub account. This is a solid lead, and we might uncover the attacker’s full identity in upcoming Advent of Cyber challenges.</p>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_7.jpg" alt="GitHub repository issue screenshot">
+            </figure>
+
+            <figure>
+                <img src="../images/advent_of_cyber_day1_8.jpg" alt="Second GitHub repository issue screenshot">
+            </figure>
+
+            <h2>Conclusion</h2>
+            <p>The Day 1 challenge highlights how easy it can be to disguise malware as a simple YouTube-to-MP3 converter. If you’re using sites like this outside of a VM or sandbox, proceed with caution. Hopefully, as Advent of Cyber continues, we’ll learn more about “M.M.” and their operation.</p>
+            <p>Thanks for reading!</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="../js/scripts.js"></script>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
+</body>
+</html>
