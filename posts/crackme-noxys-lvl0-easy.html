@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crackme: noxy's lv10 easy crackmes - Ryan's Blog</title>
+    
+    <!-- SEO Meta Description -->
+    <meta name="description" content="Explore noxy's lv10 easy crackmes, a Windows x86-64 crackme analyzed on FLARE VM. Discover how to handle missing DLLs, analyze suspicious strings, and ultimately reveal the hidden password.">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Crackme: noxy's lv10 easy crackmes">
+    <meta property="og:description" content="A deep dive into noxy's lv10 easy crackmes: Windows x86-64 binary analysis using FLARE VM, searching for hidden strings, and uncovering the secret password.">
+    <meta property="og:url" content="https://ryanlongoria.com/posts/crackme-noxys-lv10-easy.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ryanlongoria.com/images/crackme-noxys-lv10-easy.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crackme: noxy's lv10 easy crackmes">
+    <meta name="twitter:description" content="Learn how to tackle a Windows x86-64 crackme, identify missing DLLs, and find the hidden password in noxy's lv10 easy crackmes.">
+    <meta name="twitter:image" content="https://ryanlongoria.com/images/crackme-noxys-lv10-easy.jpg">
+    
+    <!-- Structured Data with Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "My first crackme!",
+      "description": "Explore noxy's lv10 easy crackme, a Windows x86-64 crackme analyzed on FLARE VM. Discover how to handle missing DLLs, analyze suspicious strings, and ultimately reveal the hidden password.",
+      "author": {
+        "@type": "Person",
+        "name": "Ryan Longoria"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Ryan Longoria's Blog",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://ryanlongoria.com/images/gengar_logo.png"
+        }
+      },
+      "datePublished": "2025-01-08",
+      "url": "https://ryanlongoria.com/posts/crackme-noxys-lv10-easy.html",
+      "image": "https://ryanlongoria.com/images/crackme-noxys-lv10-easy.jpg"
+    }
+    </script>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Particles.js Container -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <img src="../images/gengar_logo.png" alt="DFIR Automation Blog Logo">
+                    </a>
+                </div>
+                <h1 class="banner-title">Ryan Longoria's Blog</h1>
+            </div>
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropbtn">Categories</a>
+                        <div class="dropdown-content">
+                            <a href="../categories/incident-response.html">Incident Response</a>
+                            <a href="../categories/digital-forensics.html">Digital Forensics</a>
+                            <a href="../categories/misc.html">Misc</a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="menu-toggle" id="mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <article class="post-content">
+            <h1>Crackme: noxy's lv10 easy crackmes</h1>
+            <p><em>Published on 2025-01-08</em></p>
+
+            <p><strong>Category:</strong> <a href="../categories/misc.html">Misc</a></p>
+
+            <p>
+                In this post, we explore a Windows x86-64 crackme from 
+                <a href="https://crackmes.one/crackme/662fab296b8bd8ddfe33c184" target="_blank" rel="noopener noreferrer">crackmes.one</a> 
+                called <strong>noxy's lv10 easy crackmes</strong>, authored by <em>noxys</em>. 
+                We’ll use a Windows environment and FLARE VM for analysis. Let's see how to tackle missing DLL errors, examine suspicious strings, and pinpoint the hidden password.
+            </p>
+
+            <h2>Setting Up the Lab</h2>
+            <p>
+                I used a Windows machine equipped with <strong>FLARE VM</strong> as my main lab to work on this crackme. 
+                Initially, I scanned the crackme’s ZIP file with VirusTotal, and 3 out of 73 security vendors flagged it as a trojan. 
+                After extracting the ZIP with 7-Zip, I found an executable named <code>lvl0.exe</code>.
+            </p>
+            <p>
+                When I tried running <code>lvl0.exe</code>, I encountered the following errors:
+            </p>
+            <ul>
+                <li>The code execution cannot proceed because <code>libgcc_s_dw2-1.dll</code> was not found.</li>
+                <li>The code execution cannot proceed because <code>libstdc++-6.dll</code> was not found.</li>
+            </ul>
+
+            <figure>
+                <img src="../images/crackme_errors.jpg" alt="Missing DLL errors screenshot">
+            </figure>
+
+            <p>
+                To fix this, I decided to compile the source code with MinGW since it has the C++ libraries needed. Once compiled, I ran the new executable and saw a prompt saying:
+            </p>
+            <blockquote>
+                <em>Find my secret:</em>
+            </blockquote>
+            <p>
+                Entering a random string resulted in the output <strong>WRONG</strong>.
+            </p>
+
+            <figure>
+                <img src="../images/crackme_prompt.jpg" alt="Crackme prompt screenshot">
+            </figure>
+
+            <h2>Initial Analysis with Strings</h2>
+            <p>
+                We'll first use the <code>strings</code> utility on <code>lvl0.exe</code>. This can reveal 
+                human-readable text that might hint at a correct password or highlight interesting functionality.
+            </p>
+            <p>
+                The binary included many references related to GCC 6.3.0, MinGW, and standard C++ library symbols—typical for a C++ program compiled on Windows using MinGW. 
+                Then I spotted more unique strings, including:
+            </p>
+            <ul>
+                <li><code>C++ is best</code></li>
+                <li><code>Dota 2 >>>>> LoL</code></li>
+                <li><code>Python is trash</code></li>
+                <li><code>Hate from africa</code></li>
+                <li><code>m not crazy</code></li>
+                <li><code>fentanyl</code></li>
+                <li><code>imgay</code></li>
+                <li><code>Find my secret :</code></li>
+                <li><code>Correct DaDdYYYY</code></li>
+                <li><code>WRONG</code></li>
+            </ul>
+            <p>
+                The “Find my secret:” prompt clearly matches what we see at runtime, so I suspected one of these other odd strings might be the correct password.
+            </p>
+
+            <h2>Finding the Correct Password</h2>
+            <p>
+                I tried inputting each suspicious phrase from the list. After several “WRONG” messages, 
+                I discovered that <code>imgay</code> is the winning password. 
+                The program then printed <code>Correct DaDdYYYY</code> to confirm success. 
+            </p>
+            <p>
+                Sometimes, developers embed an actual password within success strings. In this case, 
+                the presence of “imgay” was enough to solve it. The weird random strings might be red herrings 
+                or included just to throw off anyone sifting through <code>strings</code>. It seems we got lucky!
+            </p>
+			
+			<figure>
+                <img src="../images/crackme_answer.jpg" alt="Crackme prompt screenshot">
+            </figure>
+
+            <h2>Conclusion</h2>
+            <p>
+                Overall, <em>noxy's lv10 easy crackmes</em> provided a quick and straightforward puzzle:
+                dealing with missing DLLs, analyzing suspicious strings, and discovering the secret prompt. 
+                Always remember to check a crackme with tools like <code>strings</code> for potential clues, especially 
+                for simpler challenges. If you encounter missing Win libraries, recompiling the code with MinGW or 
+                installing the required DLLs can help you run the executable without errors (most of the time).
+            </p>
+            <p>
+                happy cracking!
+            </p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="gengar-shadow"></div>
+            <div class="social">
+                <a href="https://x.com/kyro_sec" target="_blank" rel="noopener noreferrer">Twitter</a> |
+                <a href="https://www.linkedin.com/in/ryan-longoria/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+                <a href="https://github.com/ryan-longoria" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="../js/scripts.js"></script>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/components/prism-powershell.min.js"></script>
+</body>
+</html>

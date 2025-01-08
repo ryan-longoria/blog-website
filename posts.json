@@ -96,6 +96,13 @@
         "excerpt": "Explore a seemingly harmless YouTube-to-MP3 converter that actually hides a malicious PowerShell script designed to steal cryptocurrency wallets and credentials.",
         "category": "misc"
         "date": "2024-12-15"
+    },
+	{
+        "title": "My first crackme!",
+        "url": "posts/cracme-noxys-lvl0-easy.html",
+        "excerpt": "Explore noxy's lv10 easy crackme, a Windows x86-64 crackme analyzed on FLARE VM. Discover how to handle missing DLLs, analyze suspicious strings, and ultimately reveal the hidden password.",
+        "category": "misc"
+        "date": "2025-01-08"
     }
   ]
   
